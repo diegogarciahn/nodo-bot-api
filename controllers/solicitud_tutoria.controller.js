@@ -1,4 +1,4 @@
-const SolicitudTutorias = require('../models/solicitudTutorias.model');
+const SolicitudTutorias = require('../models/solicitud_tutoria.model.js');
 
 // Controlador para crear una nueva solicitud de tutoría
 const crearSolicitudTutoria = async (req, res) => {
