@@ -27,7 +27,7 @@ const obtenerSolicitudTutorId = async (req, res) => {
   };
 
   // Controlador para obtener todas las solicitudes de tutoría
-const obtenerSolicitudesTutorias = async (req, res) => {
+const obtenerSolicitudesTutores = async (req, res) => {
     try {
       const solicitudes = await SolicitudTutor.find();
       res.json(solicitudes);
@@ -75,7 +75,7 @@ const obtenerSolicitudesTutorias = async (req, res) => {
   module.exports = {
     crearSolicitudTutor,
     obtenerSolicitudTutorId,
-    obtenerSolicitudesTutorias,
+    obtenerSolicitudesTutores,
     actualizarSolicitudTutor,
     eliminarSolicitudTutor,
   };
