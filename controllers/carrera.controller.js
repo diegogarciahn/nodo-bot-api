@@ -1,4 +1,4 @@
-const Carrera = require('../models/carrera');
+const Carrera = require('../models/carrera.model');
 
 // Crear nueva carrera
 const createCarrera = async (req, res) => {

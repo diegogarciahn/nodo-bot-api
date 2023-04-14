@@ -21,9 +21,16 @@ const crearClase = async (req, res) => {
 const obtenerClases = async (req, res) => {
     try {
         const clases = await Clase.find();
-        return res.status(200).json({
+
+        if (clases.length === 0) {
+            return res.status(404).json({
+                msg: 'No hay clases'
+            });
+        }
+
+        return res.status(200).json(
             clases
-        });
+        );
     } catch (error) {
         return res.status(500).json({
             mensaje: 'Error al obtener las clases', error: error.message
