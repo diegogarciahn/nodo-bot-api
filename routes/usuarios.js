@@ -1,15 +1,16 @@
 'Ruta: /api/usuarios';
 
 const { Router } = require('express');
-const { usuariosGet, usuariosPut, usuariosPost, usuariosDelete, usuariosPatch } = require('../controllers/usuarios');
+const controller  = require('../controllers/usuarios.controller');
 
 const router = Router();
 
-router.get('/', usuariosGet);
-router.post('/', usuariosPost);
-router.put('/:id', usuariosPut);
-router.patch('/', usuariosPatch);
-router.delete('/', usuariosDelete);
+router.get('/obtenerUsuarios', controller.getUsers);
+router.get('/obtenerUsuario/:id', controller.getUser);
+router.post('/crearUsuario', controller.createUser);
+router.put('/actualizarUsuario/:id', controller.updateUser);
+//router.patch('/', );
+router.delete('/delete/:id', controller.deleteUser);
 
 module.exports = router;
 
