@@ -8,7 +8,9 @@ class Server {
     constructor() {
         this.app = express();
         this.port = process.env.PORT;
+        this.authRoutePath = '/api/auth';
         this.usuariosRoutePath = '/api/usuarios';
+        this.tutoriasRoutePath = '/api/tutoria';
         this.rutaAulas = '/api/aulas';
         this.rutaClases = '/api/clases';
         this.rutaEstudiantes = '/api/estudiantes';
@@ -38,7 +40,9 @@ class Server {
     // Endpoints 
     routes() {
         // Ruta de usuarios api
-        this.app.use(this.usuariosRoutePath, require('../routes/usuarios'));
+        this.app.use(this.usuariosRoutePath, require('../routes/usuarios.routes'));
+        this.app.use(this.tutoriasRoutePath, require('../routes/tutoria.routes'));
+        this.app.use(this.authRoutePath, require('../routes/auth.routes'));
         this.app.use(this.rutaAulas, require('../routes/aula.routes'));
         this.app.use(this.rutaClases, require('../routes/clase.routes'));
         this.app.use(this.rutaEstudiantes, require('../routes/estudiante.routes'));
