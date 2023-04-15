@@ -1,10 +1,10 @@
-const User = require("../models/user");
+const User = require("../models/usuario.models");
 
 // GET /users
 const getUsers = async(req, res) => {
     try {
         const users = await User.find();
-        res.json(users);
+        res.status(200).json(users);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -17,7 +17,7 @@ const getUser = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-    res.json(user);
+    res.status(200).json(user);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -25,8 +25,9 @@ const getUser = async (req, res) => {
 
 // POST /users
 const createUser = async (req, res) => {
-    const { nombre_usuario, password, rol, telefono } = req.body;
+    const { id, nombre_usuario, password, rol, telefono } = req.body;
     const user = new User({
+        id,
         nombre_usuario,
         password,
         rol,
@@ -62,12 +63,11 @@ const updateUser = async (req, res) => {
 // DELETE /users/:id
 const deleteUser = async (req, res) => {
 try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findByIdAndDelete(req.params.id);
     if (!user) {
         return res.status(404).json({ message: "User not found" });
     }
-    await user.remove();
-    res.json({ message: "User deleted successfully" });
+    res.status(200).json({ message: "User deleted successfully" });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
