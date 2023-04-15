@@ -5,9 +5,13 @@ const crearEstudiante = async (req, res) => {
     try {
         const nuevoEstudiante = new Estudiante(req.body);
         await nuevoEstudiante.save();
-        res.status(201).json({ mensaje: 'Estudiante creado exitosamente', estudiante: nuevoEstudiante });
+        return res.status(201).json({
+            mensaje: 'Estudiante creado exitosamente', estudiante: nuevoEstudiante
+        });
     } catch (error) {
-        res.status(500).json({ mensaje: 'Error al crear el estudiante', error: error.message });
+        return res.status(500).json({
+            mensaje: 'Error al crear el estudiante', error: error.message
+        });
     }
 };
 
@@ -15,9 +19,30 @@ const crearEstudiante = async (req, res) => {
 const obtenerEstudiantes = async (req, res) => {
     try {
         const estudiantes = await Estudiante.find();
-        res.status(200).json({ estudiantes });
+        return res.status(200).json({
+            estudiantes
+        });
     } catch (error) {
-        res.status(500).json({ mensaje: 'Error al obtener los estudiantes', error: error.message });
+        return res.status(500).json({
+            mensaje: 'Error al obtener los estudiantes', error: error.message
+        });
+    }
+};
+
+// Obtener estudiante por ID
+const obtenerEstudiantePorId = async (req, res) => {
+    try {
+        const estudiante = await Estudiante.findById(req.params.id);
+        if (!estudiante) {
+            return res.status(404).json({
+                mensaje: 'Estudiante no encontrado'
+            });
+        }
+        return res.status(200).json({ estudiante });
+    } catch (error) {
+        return res.status(500).json({
+            mensaje: 'Error al obtener el estudiante', error: error.message
+        });
     }
 };
 
@@ -25,9 +50,13 @@ const obtenerEstudiantes = async (req, res) => {
 const actualizarEstudiante = async (req, res) => {
     try {
         const estudianteActualizado = await Estudiante.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        res.status(200).json({ mensaje: 'Estudiante actualizado exitosamente', estudiante: estudianteActualizado });
+        return res.status(200).json({
+            mensaje: 'Estudiante actualizado exitosamente', estudiante: estudianteActualizado
+        });
     } catch (error) {
-        res.status(500).json({ mensaje: 'Error al actualizar el estudiante', error: error.message });
+        return res.status(500).json({
+            mensaje: 'Error al actualizar el estudiante', error: error.message
+        });
     }
 };
 
@@ -35,9 +64,13 @@ const actualizarEstudiante = async (req, res) => {
 const borrarEstudiante = async (req, res) => {
     try {
         await Estudiante.findByIdAndDelete(req.params.id);
-        res.status(200).json({ mensaje: 'Estudiante borrado exitosamente' });
+        return res.status(200).json({
+            mensaje: 'Estudiante borrado exitosamente'
+        });
     } catch (error) {
-        res.status(500).json({ mensaje: 'Error al borrar el estudiante', error: error.message });
+        return res.status(500).json({
+            mensaje: 'Error al borrar el estudiante', error: error.message
+        });
     }
 };
 
@@ -45,6 +78,7 @@ const borrarEstudiante = async (req, res) => {
 module.exports = {
     crearEstudiante,
     obtenerEstudiantes,
+    obtenerEstudiantePorId,
     actualizarEstudiante,
     borrarEstudiante
 };
