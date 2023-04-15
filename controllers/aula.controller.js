@@ -1,4 +1,4 @@
-const Aula = require('../models/aula');
+const Aula = require('../models/aula.model');
 
 // Crear nueva aula
 const createAula = async (req, res) => {
@@ -16,6 +16,13 @@ const createAula = async (req, res) => {
 const getAllAulas = async (req, res) => {
     try {
         const aulas = await Aula.find();
+
+        if(aulas.length === 0) {
+            return res.status(404).json({
+                msg: 'No hay aulas'
+            });
+        }
+
         return res.status(200).json(aulas);
     } catch (error) {
         console.error(error);

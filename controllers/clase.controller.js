@@ -5,19 +5,55 @@ const crearClase = async (req, res) => {
     try {
         const nuevaClase = new Clase(req.body);
         await nuevaClase.save();
-        res.status(201).json({ mensaje: 'Clase creada exitosamente', clase: nuevaClase });
+        return res.status(201).json({
+            mensaje: 'Clase creada exitosamente',
+            clase: nuevaClase
+        });
     } catch (error) {
-        res.status(500).json({ mensaje: 'Error al crear la clase', error: error.message });
+        return res.status(500).json({
+            mensaje: 'Error al crear la clase',
+            error: error.message
+        });
     }
 };
 
-// Leer todas las clases
+// Obtener todas las clases
 const obtenerClases = async (req, res) => {
     try {
         const clases = await Clase.find();
-        res.status(200).json({ clases });
+
+        if (clases.length === 0) {
+            return res.status(404).json({
+                msg: 'No hay clases'
+            });
+        }
+
+        return res.status(200).json(
+            clases
+        );
     } catch (error) {
-        res.status(500).json({ mensaje: 'Error al obtener las clases', error: error.message });
+        return res.status(500).json({
+            mensaje: 'Error al obtener las clases', error: error.message
+        });
+    }
+};
+
+// Obtener una clase por su ID
+const obtenerClasePorId = async (req, res) => {
+    try {
+        const clase = await Clase.findById(req.params.id);
+        if (!clase) {
+            return res.status(404).json({
+                mensaje: 'Clase no encontrada'
+            });
+        }
+        return res.status(200).json({
+            clase
+        });
+    } catch (error) {
+        return res.status(500).json({
+            mensaje: 'Error al obtener la clase', error: error.message
+        });
     }
 };
 
@@ -25,9 +61,13 @@ const obtenerClases = async (req, res) => {
 const actualizarClase = async (req, res) => {
     try {
         const claseActualizada = await Clase.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        res.status(200).json({ mensaje: 'Clase actualizada exitosamente', clase: claseActualizada });
+        return res.status(200).json({
+            mensaje: 'Clase actualizada exitosamente', clase: claseActualizada
+        });
     } catch (error) {
-        res.status(500).json({ mensaje: 'Error al actualizar la clase', error: error.message });
+        return res.status(500).json({
+            mensaje: 'Error al actualizar la clase', error: error.message
+        });
     }
 };
 
@@ -35,9 +75,13 @@ const actualizarClase = async (req, res) => {
 const borrarClase = async (req, res) => {
     try {
         await Clase.findByIdAndDelete(req.params.id);
-        res.status(200).json({ mensaje: 'Clase borrada exitosamente' });
+        return res.status(200).json({
+            mensaje: 'Clase borrada exitosamente'
+        });
     } catch (error) {
-        res.status(500).json({ mensaje: 'Error al borrar la clase', error: error.message });
+        return res.status(500).json({
+            mensaje: 'Error al borrar la clase', error: error.message
+        });
     }
 };
 
@@ -45,6 +89,7 @@ const borrarClase = async (req, res) => {
 module.exports = {
     crearClase,
     obtenerClases,
+    obtenerClasePorId,
     actualizarClase,
     borrarClase
 };
