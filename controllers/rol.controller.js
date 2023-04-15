@@ -1,7 +1,7 @@
 const Rol = require('../models/rol');
 
 // Controlador para obtener todos los roles
-exports.obtenerRoles = async (req, res) => {
+const obtenerRoles = async (req, res) => {
   try {
     const roles = await Rol.find();
     res.status(200).json(roles);
@@ -11,7 +11,7 @@ exports.obtenerRoles = async (req, res) => {
 }
 
 // Controlador para obtener un rol específico
-exports.obtenerRol = async (req, res) => {
+const obtenerRol = async (req, res) => {
   const { id } = req.params;
   try {
     const rol = await Rol.findOne({ id });
@@ -25,7 +25,7 @@ exports.obtenerRol = async (req, res) => {
 }
 
 // Controlador para crear un nuevo rol
-exports.crearRol = async (req, res) => {
+const crearRol = async (req, res) => {
   const { id, nombre_rol, permisos } = req.body;
   try {
     const nuevoRol = new Rol({ id, nombre_rol, permisos });
@@ -37,7 +37,7 @@ exports.crearRol = async (req, res) => {
 }
 
 // Controlador para actualizar un rol existente
-exports.actualizarRol = async (req, res) => {
+const actualizarRol = async (req, res) => {
   const { id } = req.params;
   const { nombre_rol, permisos } = req.body;
   try {
@@ -52,7 +52,7 @@ exports.actualizarRol = async (req, res) => {
 }
 
 // Controlador para eliminar un rol existente
-exports.eliminarRol = async (req, res) => {
+const eliminarRol = async (req, res) => {
   const { id } = req.params;
   try {
     const rol = await Rol.findOneAndDelete({ id });
@@ -63,4 +63,11 @@ exports.eliminarRol = async (req, res) => {
   } catch (error) {
     res.status(500).json({ mensaje: 'Hubo un error al eliminar el rol' });
   }
+}
+module.exports = {
+    obtenerRoles,
+    obtenerRol,
+    crearRol,
+    actualizarRol,
+    eliminarRol
 }
