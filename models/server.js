@@ -41,8 +41,7 @@ class Server {
         // Ruta de usuarios api
         this.app.use(this.usuariosRoutePath, require('../routes/usuarios.routes'));
         this.app.use(this.tutoriasRoutePath, require('../routes/tutoria.routes'));
-        this.app.use(this.authRoutePath, require('../routes/auth'));
-        this.app.use(this.usuariosRoutePath, require('../routes/usuarios'));
+        this.app.use(this.authRoutePath, require('../routes/auth.routes'));
         this.app.use(this.rutaAulas, require('../routes/aula.routes'));
         this.app.use(this.rutaClases, require('../routes/clase.routes'));
         this.app.use(this.rutaEstudiantes, require('../routes/estudiante.routes'));
