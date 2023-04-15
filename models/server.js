@@ -10,6 +10,8 @@ class Server {
         this.port = process.env.PORT;
         this.usuariosRoutePath = '/api/usuarios';
         this.rutaAulas = '/api/aulas'
+        this.rutaClases = '/api/clases'
+        this.rutaEstudiantes = '/api/estudiantes'
 
         // Midlewares: funciones que siempre se van a ejecutar cuando iniciamos un servidor
         this.middlewares();
@@ -36,6 +38,8 @@ class Server {
         // Ruta de usuarios api
         this.app.use(this.usuariosRoutePath, require('../routes/usuarios'));
         this.app.use(this.rutaAulas, require('../routes/aula.routes'));
+        this.app.use(this.rutaClases, require('../routes/clase.routes'));
+        this.app.use(this.rutaEstudiantes, require('../routes/estudiante.routes'));
     }
 
     listen() {
