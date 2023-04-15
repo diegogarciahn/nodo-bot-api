@@ -1,5 +1,5 @@
 const { request, response } = require('express');
-const { generarJWT } = require('../helpers/generarjwt.helper');
+const { generarJWT } = require('../helpers/generarJWT.helpers');
 const bcrypt = require('bcrypt');
 var base64 = require('base-64');
 const Usuario = require('../models/usuario.models');
