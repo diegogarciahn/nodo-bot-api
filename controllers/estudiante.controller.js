@@ -1,0 +1,50 @@
+const Estudiante = require('../models/estudiante.model'); // Importar el modelo de Estudiante
+
+// Crear un nuevo estudiante
+const crearEstudiante = async (req, res) => {
+    try {
+        const nuevoEstudiante = new Estudiante(req.body);
+        await nuevoEstudiante.save();
+        res.status(201).json({ mensaje: 'Estudiante creado exitosamente', estudiante: nuevoEstudiante });
+    } catch (error) {
+        res.status(500).json({ mensaje: 'Error al crear el estudiante', error: error.message });
+    }
+};
+
+// Leer todos los estudiantes
+const obtenerEstudiantes = async (req, res) => {
+    try {
+        const estudiantes = await Estudiante.find();
+        res.status(200).json({ estudiantes });
+    } catch (error) {
+        res.status(500).json({ mensaje: 'Error al obtener los estudiantes', error: error.message });
+    }
+};
+
+// Actualizar un estudiante por su ID
+const actualizarEstudiante = async (req, res) => {
+    try {
+        const estudianteActualizado = await Estudiante.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.status(200).json({ mensaje: 'Estudiante actualizado exitosamente', estudiante: estudianteActualizado });
+    } catch (error) {
+        res.status(500).json({ mensaje: 'Error al actualizar el estudiante', error: error.message });
+    }
+};
+
+// Borrar un estudiante por su ID
+const borrarEstudiante = async (req, res) => {
+    try {
+        await Estudiante.findByIdAndDelete(req.params.id);
+        res.status(200).json({ mensaje: 'Estudiante borrado exitosamente' });
+    } catch (error) {
+        res.status(500).json({ mensaje: 'Error al borrar el estudiante', error: error.message });
+    }
+};
+
+// Exportar las funciones del controlador
+module.exports = {
+    crearEstudiante,
+    obtenerEstudiantes,
+    actualizarEstudiante,
+    borrarEstudiante
+};
