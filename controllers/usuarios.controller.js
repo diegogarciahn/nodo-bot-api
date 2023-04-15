@@ -1,4 +1,5 @@
 const User = require("../models/usuario.models");
+const bcrypt = require('bcrypt');
 
 // GET /users
 const getUsers = async(req, res) => {
@@ -26,10 +27,12 @@ const getUser = async (req, res) => {
 // POST /users
 const createUser = async (req, res) => {
     const { id, nombre_usuario, password, rol, telefono } = req.body;
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
     const user = new User({
         id,
         nombre_usuario,
-        password,
+        password: hashedPassword,
         rol,
         telefono,
     });
