@@ -1,4 +1,4 @@
-const Rol = require('../models/rol');
+const Rol = require('../models/rol.model');
 
 // Controlador para obtener todos los roles
 const obtenerRoles = async (req, res) => {
@@ -32,6 +32,7 @@ const crearRol = async (req, res) => {
     await nuevoRol.save();
     res.status(201).json({ mensaje: 'Rol creado con éxito' });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ mensaje: 'Hubo un error al crear el rol' });
   }
 }
