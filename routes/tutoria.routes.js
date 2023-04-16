@@ -5,8 +5,8 @@ const controller  = require('../controllers/tutoria.controller');
 
 const router = Router();
 
-router.get('/obtenerTutorias', controller.getAllTutorias);
-router.get('/obtenerTutoria/:id', controller.getTutoriaById);
+router.get('/obtenerTutorias', controller.getTutorias);
+router.get('/obtenerTutoria/:id', controller.getTutoria);
 router.post('/crearTutoria', controller.createTutoria);
 router.put('/actualizarTutoria/:id', controller.updateTutoria);
 //router.patch('/', );

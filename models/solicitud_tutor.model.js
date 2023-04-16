@@ -9,6 +9,8 @@ const SolicitudTutorSchema = new Schema({
   fecha_hora: { type: Date, required: true },
   fecha_hora_resuelto: { type: Date },
   feedback: { type: String },
+},{
+  collection: 'solicitud_tutor'
 });
 
 const SolicitudTutor = mongoose.model('SolicitudTutor', SolicitudTutorSchema);

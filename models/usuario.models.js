@@ -1,19 +1,23 @@
 const mongoose = require('mongoose');
+const Rol = require('./rol.models');
 
-const UserSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     id: Number,
     nombre_usuario: String,
     password: String,
     rol: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Rol',
-        required: true
+        required: true,
+        autopopulate: true
     },
-    telefono: String,
+    telefono: String
 },{
     collection: 'usuario'
 });
 
-const User = mongoose.model('Usuario', UserSchema);
+userSchema.plugin(require('mongoose-autopopulate'));
+
+const User = mongoose.model('Usuario', userSchema);
 
 module.exports = User;

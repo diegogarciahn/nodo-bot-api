@@ -1,5 +1,28 @@
 const Tutoria = require('../models/tutoria.models');
 
+// Controlador para obtener todas las tutorías
+const getTutorias = async (req, res, next) => {
+    try{
+        const tutorias = await Tutoria.find().populate('aula', 'solicitud_tutoria');
+        res.status(200).json(tutorias);
+    }catch(error){
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// Controlador para obtener una tutoría por su ID
+const getTutoria = async (req, res, next) => {
+    try{
+        const tutoria = await Tutoria.findById(req.params.id);
+        if (!tutoria) {
+            return res.status(404).json({ message: "Tutoría no encontrada" });
+        }
+        res.status(200).json(tutoria);
+    }catch(error){
+        res.status(500).json({ error: error.message });
+    }
+};
+
 // Controlador para crear una nueva tutoría
 const createTutoria = async (req, res, next) => {
     try{
@@ -11,29 +34,6 @@ const createTutoria = async (req, res, next) => {
         });
         const newTutoria = await tutoria.save();
         res.status(201).json(newTutoria);
-    }catch(error){
-        res.status(500).json({ error: error.message });
-    }
-};
-
-// Controlador para obtener todas las tutorías
-const getAllTutorias = async (req, res, next) => {
-    try{
-        const tutorias = await Tutoria.find();
-        res.status(200).json(tutorias);
-    }catch(error){
-        res.status(500).json({ error: error.message });
-    }
-};
-
-// Controlador para obtener una tutoría por su ID
-const getTutoriaById = async (req, res, next) => {
-    try{
-        const tutoria = await Tutoria.findById(req.params.id);
-        if (!tutoria) {
-            return res.status(404).json({ message: "Tutoría no encontrada" });
-        }
-        res.status(200).json(tutoria);
     }catch(error){
         res.status(500).json({ error: error.message });
     }
@@ -70,9 +70,9 @@ const deleteTutoria = async (req, res, next) => {
 };
 
 module.exports = {
+    getTutorias,
+    getTutoria,
     createTutoria,
-    getAllTutorias,
-    getTutoriaById,
     updateTutoria,
     deleteTutoria
 };
