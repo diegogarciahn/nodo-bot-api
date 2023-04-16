@@ -13,6 +13,8 @@ const horarioSchema = new mongoose.Schema({
     type: String,
     required: true
   }
+},{
+  collection: 'horario'
 });
 
 const Horario = mongoose.model('Horario', horarioSchema);

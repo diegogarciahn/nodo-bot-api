@@ -10,6 +10,8 @@ const rolSchema = new mongoose.Schema({
   id: { type: Number, required: true },
   nombre_rol: { type: String, required: true },
   permisos: [permisoSchema]
+},{
+  collection: 'rol'
 });
 
 const Rol = mongoose.model('Rol', rolSchema);

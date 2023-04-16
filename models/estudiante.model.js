@@ -10,6 +10,8 @@ const EstudianteSchema = new mongoose.Schema({
     carrera: [{ type: String }],
     telefono: { type: String },
     horario_tutor: [{ type: String }]
+},{
+    collection: 'estudiante'
 });
 
 // Crear y exportar el modelo

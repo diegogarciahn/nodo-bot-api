@@ -25,6 +25,8 @@ const solicitudTutoriasSchema = new Schema({
     ref: 'Horario',
     required: true
   },
+},{
+  collection: 'solicitud_tutoria'
 });
 
 const SolicitudTutorias = mongoose.model('SolicitudTutorias', solicitudTutoriasSchema);

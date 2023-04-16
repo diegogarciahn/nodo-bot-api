@@ -13,6 +13,8 @@ const permisoSchema = new mongoose.Schema({
     type: String,
     required: true
   }
+},{
+  collection: 'permiso'
 });
 
 const Permiso = mongoose.model('Permiso', permisoSchema);
