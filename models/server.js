@@ -16,6 +16,8 @@ class Server {
         this.rutaEstudiantes = '/api/estudiantes';
         this.rutaCarreras = '/api/carreras';
         this.rutaRol = '/api/roles'
+        this.rutaHorario = '/api/horario'
+        this.rutaPermiso = '/api/permiso'
         this.rutaSolicitudTutor = '/api/solicitud_tutor';   
         this.rutaSolicitudTutoria = '/api/solicitud_tutoria';
 
