@@ -1,17 +1,22 @@
 const SolicitudTutor = require('../models/solicitud_tutor.model');
 
 const crearSolicitudTutor = async (req, res) => {
-    const { id, estudiante, estado, fecha_hora, feedback} = req.body;
-    try {
-      const nuevaSolicitudTutor = new SolicitudTutor({
-        id, estudiante, estado, fecha_hora, feedback,
-      });
-      await solicitud_tutor.save();
-        return res.status(201).json({ message: 'Solicitud Creada con éxito', solicitud_tutor });
-    } catch (error) {
-      res.status(500).json({ message: 'Error al crear Solicitud de Tutor ' });
-    }
-  };
+  try {
+    const nuevaSolicitudTutor = new SolicitudTutor({
+      id: req.body.id,
+      estudiante: req.body.estudiante,
+      estado: req.body.estado,
+      fecha_hora: req.body.fecha_hora,
+      fecha_hora_resuelto: req.body.fecha_hora_resuelto,
+      feedback: req.body.feedback
+    });
+    await nuevaSolicitudTutor.save();
+    res.json({ mensaje: 'Solicitud de tutor creada exitosamente' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Hubo un error al crear la solicitud de tutor');
+  }
+};
 
 const obtenerSolicitudTutorId = async (req, res) => {
     const { id } = req.params;
@@ -29,7 +34,7 @@ const obtenerSolicitudTutorId = async (req, res) => {
   // Controlador para obtener todas las solicitudes de tutoría
 const obtenerSolicitudesTutores = async (req, res) => {
     try {
-      const solicitudes = await SolicitudTutor.find();
+      const solicitudes = await SolicitudTutor.find().populate('estudiante');
       res.json(solicitudes);
     } catch (error) {
       res.status(500).json({ error: error.message });

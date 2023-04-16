@@ -1,4 +1,4 @@
-const Rol = require('../models/rol.model');
+const Rol = require('../models/rol.models');
 
 // Controlador para obtener todos los roles
 const obtenerRoles = async (req, res) => {

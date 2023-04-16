@@ -16,6 +16,8 @@ class Server {
         this.rutaEstudiantes = '/api/estudiantes';
         this.rutaCarreras = '/api/carreras';
         this.rutaRol = '/api/roles'
+        this.rutaSolicitudTutor = '/api/solicitud_tutor';   
+        this.rutaSolicitudTutoria = '/api/solicitud_tutoria';
 
         // Midlewares: funciones que siempre se van a ejecutar cuando iniciamos un servidor
         this.middlewares();
@@ -48,6 +50,8 @@ class Server {
         this.app.use(this.rutaEstudiantes, require('../routes/estudiante.routes'));
         this.app.use(this.rutaCarreras, require('../routes/carreras.routes'));
         this.app.use(this.rutaRol, require('../routes/rol.routes'));
+        this.app.use(this.rutaSolicitudTutor, require('../routes/solicitud_tutor.routes'));
+        this.app.use(this.rutaSolicitudTutoria, require('../routes/solicitud_tutoria.routes'));
     }
 
     listen() {
