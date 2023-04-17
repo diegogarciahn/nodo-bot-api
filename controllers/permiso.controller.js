@@ -1,4 +1,4 @@
-const Permiso = require('./models/permiso.js');
+const Permiso = require('../models/permiso.models');
 
 // Controlador para obtener todos los permisos
 const obtenerPermisos = async (req, res) => {
