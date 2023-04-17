@@ -52,6 +52,8 @@ class Server {
         this.app.use(this.rutaEstudiantes, require('../routes/estudiante.routes'));
         this.app.use(this.rutaCarreras, require('../routes/carreras.routes'));
         this.app.use(this.rutaRol, require('../routes/rol.routes'));
+        this.app.use(this.rutaHorario, require('../routes/horario.routes'));
+        this.app.use(this.rutaPermiso, require('../routes/permiso.routes'))
         this.app.use(this.rutaSolicitudTutor, require('../routes/solicitud_tutor.routes'));
         this.app.use(this.rutaSolicitudTutoria, require('../routes/solicitud_tutoria.routes'));
     }
