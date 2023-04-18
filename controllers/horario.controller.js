@@ -1,9 +1,9 @@
-const Horario = require('../models/horario');
+const Horario = require('../models/horario.models');
 
 const obtenerHorarios = async (req, res) => {
   try {
     const horarios = await Horario.find();
-    res.status(200).json({horarios});
+    res.status(200).json(horarios);
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ mensaje: 'Error al obtener los horarios', error: error.message });
