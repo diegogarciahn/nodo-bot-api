@@ -5,9 +5,9 @@ const { crearPermiso, obtenerPermisos, actualizarPermiso, eliminarPermiso  } = r
 
 const router = Router();
 
-router.post('/', crearPermiso); // Ruta para crear un nuevo permiso
-router.get('/', obtenerPermisos); // Ruta para obtener todos los permiso
-router.put('/', actualizarPermiso); // Ruta para actualizar un permiso por su ID
-router.delete('/', eliminarPermiso); // Ruta para borrar un permiso por su ID
+router.post('/crearPermiso', crearPermiso); // Ruta para crear un nuevo permiso
+router.get('/obtenerPermiso', obtenerPermisos); // Ruta para obtener todos los permiso
+router.put('/actualizarPermiso/:id', actualizarPermiso); // Ruta para actualizar un permiso por su ID
+router.delete('/eliminarPermiso/:id', eliminarPermiso); // Ruta para borrar un permiso por su ID
 
 module.exports = router;

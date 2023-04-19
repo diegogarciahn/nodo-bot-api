@@ -4,7 +4,7 @@ const Permiso = require('../models/permiso.models');
 const obtenerPermisos = async (req, res) => {
   try {
     const permisos = await Permiso.find();
-    res.status(200).json({permisos});
+    res.status(200).json(permisos);
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al obtener las permisos', error: error.message });
   }
