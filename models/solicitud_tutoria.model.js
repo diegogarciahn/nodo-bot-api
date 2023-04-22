@@ -26,7 +26,7 @@ const solicitudTutoriasSchema = new Schema({
     autopopulate: true,
     default: null
   },
-  estado: { type: String, required: true },
+  estado: { type: String, required: true, default: 0},
   horario_solicitado: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Horario',

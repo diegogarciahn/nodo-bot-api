@@ -7,6 +7,7 @@ const crearSolicitudTutor = async (req, res) => {
       estado: req.body.estado,
       fecha_hora: req.body.fecha_hora,
       fecha_hora_resuelto: req.body.fecha_hora_resuelto,
+      horario_solicitado: req.body.horario_solicitado,
       feedback: req.body.feedback
     });
     await nuevaSolicitudTutor.save();
@@ -33,7 +34,7 @@ const obtenerSolicitudTutorId = async (req, res) => {
   // Controlador para obtener todas las solicitudes de tutoría
 const obtenerSolicitudesTutores = async (req, res) => {
     try {
-      const solicitudes = await SolicitudTutor.find().populate('estudiante');
+      const solicitudes = await SolicitudTutor.find().populate('estudiante').populate('horario_solicitado');
       res.json(solicitudes);
     } catch (error) {
       res.status(500).json({ error: error.message });
