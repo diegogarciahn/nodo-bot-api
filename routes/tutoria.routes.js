@@ -13,5 +13,5 @@ router.put('/actualizarTutoria/:id', controller.updateTutoria);
 router.delete('/deleteTutoria/:id', controller.deleteTutoria);
 
 module.exports = router;
-np
+
 
