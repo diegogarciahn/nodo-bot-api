@@ -3,7 +3,6 @@ const SolicitudTutor = require('../models/solicitud_tutor.model');
 const crearSolicitudTutor = async (req, res) => {
   try {
     const nuevaSolicitudTutor = new SolicitudTutor({
-      id: req.body.id,
       estudiante: req.body.estudiante,
       estado: req.body.estado,
       fecha_hora: req.body.fecha_hora,

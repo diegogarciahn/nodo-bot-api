@@ -4,7 +4,6 @@ const SolicitudTutorias = require('../models/solicitud_tutoria.model.js');
 const crearSolicitudTutoria = async (req, res) => {
   try {
     const nuevaSolicitudTutoria = new SolicitudTutorias({
-      id: req.body.id,
       estudiante: req.body.estudiante,
       clase: req.body.clase,
       tutor: req.body.tutor,

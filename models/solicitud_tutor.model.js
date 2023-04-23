@@ -4,7 +4,6 @@ const Estudiante = require('./estudiante.model');
 const { Schema } = mongoose;
 
 const SolicitudTutorSchema = new Schema({
-  id: { type: Number, required: true },
   estudiante: { type: Schema.Types.ObjectId, ref: 'Estudiante', required: true, autopopulate: true },
   estado: { type: String, required: true },
   fecha_hora: { type: Date, required: true,default: null },

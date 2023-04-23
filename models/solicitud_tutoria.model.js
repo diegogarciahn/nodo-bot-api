@@ -7,7 +7,6 @@ const Horario = require('./horario.models');
 const Schema = mongoose.Schema;
 
 const solicitudTutoriasSchema = new Schema({
-  id: { type: Number, required: true },
   estudiante: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Estudiante',
