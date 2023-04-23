@@ -31,8 +31,8 @@ const login = async (req = request, res = response) => {
             });
         }
 
-        const token = await generarJWT(user._id);
-
+        const token = await generarJWT(user._id.valueOf());
+        
         return res.status(200).json({
             token: token,
             usuario: user.nombre_usuario,
@@ -50,11 +50,11 @@ const login = async (req = request, res = response) => {
 const getUser = async (req = request, res = response) => {
 
     const uid = req.uid;
-
+    console.log(req.uid);
     try {
         const user = await Usuario.findOne({
             where: {
-                idUsuario: uid
+                _id: uid
             },
         });
 
