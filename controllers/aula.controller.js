@@ -3,7 +3,9 @@ const Aula = require('../models/aula.model');
 // Crear nueva aula
 const createAula = async (req, res) => {
     try {
-        const aula = new Aula(req.body);
+        const aula = new Aula({
+            numero: req.body.numero
+        });
         await aula.save();
         return res.status(201).json({ message: 'Aula creada con éxito', aula });
     } catch (error) {
@@ -17,7 +19,7 @@ const getAllAulas = async (req, res) => {
     try {
         const aulas = await Aula.find();
 
-        if(aulas.length === 0) {
+        if (aulas.length === 0) {
             return res.status(404).json({
                 msg: 'No hay aulas'
             });
@@ -32,8 +34,11 @@ const getAllAulas = async (req, res) => {
 
 // Obtener una aula por ID
 const getAulaById = async (req, res) => {
+    console.log(req);
     try {
-        const aula = await Aula.findById(req.params.id);
+        const aula = await Aula.findOne({
+            numero: req.params.id
+        });
         if (!aula) {
             return res.status(404).json({ message: 'Aula no encontrada' });
         }
