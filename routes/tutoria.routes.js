@@ -14,4 +14,3 @@ router.delete('/deleteTutoria/:id', controller.deleteTutoria);
 
 module.exports = router;
 
-
