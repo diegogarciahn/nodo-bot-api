@@ -7,18 +7,27 @@ router.post('/', [
     validarJWT,
     
 ], crearEstudiante); // Ruta para crear un nuevo estudiante
+
 router.get('/', [
     validarJWT,
     
 ], obtenerEstudiantes); // Ruta para obtener todos los estudiantes
+
+router.get('/', [
+    validarJWT,
+    
+], obtenerEstudiantes); // Ruta para obtener todos los estudiantes
+
 router.get('/search', [
     validarJWT,
     
 ], obtenerEstudiantePorId); // Ruta para obtener un estudiante por su ID
+
 router.put('/', [
     validarJWT,
     
 ], actualizarEstudiante); // Ruta para actualizar un estudiante por su ID
+
 router.delete('/', [
     validarJWT,
     

@@ -8,12 +8,13 @@ const login = async (req = request, res = response) => {
     var decode = base64.decode(req.headers.authorization.split(' ')[1]);
     const usuario = decode.split(':')[0];
     const password = decode.split(':')[1];
+
+    console.log(usuario);
+    console.log(password);
     try {
 
         const user = await Usuario.findOne({
-            where: {
-                nombre_usuario: usuario
-            },
+            nombre_usuario: usuario
         });
 
         if (!user) {
@@ -30,11 +31,11 @@ const login = async (req = request, res = response) => {
             });
         }
 
-        const token = await generarJWT(user.idUsuario);
+        const token = await generarJWT(user.id);
 
         return res.status(200).json({
             token: token,
-            usuario: user.usuario,
+            usuario: user.nombre_usuario,
         });
 
     } catch (error) {
