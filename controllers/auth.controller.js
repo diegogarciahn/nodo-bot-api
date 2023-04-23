@@ -52,12 +52,11 @@ const getUser = async (req = request, res = response) => {
     const uid = req.uid;
     console.log(req.uid);
     try {
-        const user = await Usuario.findOne({
-            where: {
-                _id: uid
-            },
-        });
+        const user = await Usuario.findById(uid);
 
+        Usuario.findById(ObjectId(uid)).then(doc => {
+            console.log(doc)
+        })
         if (!user) {
             return res.status(404).json({
                 msg: "No se encontró el usuario."
