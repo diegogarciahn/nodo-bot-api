@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const permisoSchema = new mongoose.Schema({
-  id: {
-    type: Number,
-    required: true
-  },
   nombre_permiso: {
     type: String,
     required: true
