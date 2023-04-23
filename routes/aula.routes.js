@@ -1,16 +1,34 @@
-'Ruta: /PATH DEL END POINT';
+'Ruta: /api/aula';
 const { Router } = require('express');
+const { validarJWT } = require('../middlewares/validarJWT.middleware');
+const { check } = require('express-validator');
 const { createAula, getAllAulas, getAulaById, updateAulaById, deleteAulaById } = require('../controllers/aula.controller');
 const router = Router();
 
-router.post('/', createAula);
+router.post('/', [
+    validarJWT,
+    check('numero', 'El numero de aula es obligatorio.').notEmpty(),
+    check('numero', 'El numero de aula es texto.').isString(),
+], createAula);
 
-router.get('/', getAllAulas);
+router.get('/', [
+    validarJWT,
+    
+], getAllAulas);
 
-router.get('/buscar', getAulaById);
+router.get('/buscar', [
+    validarJWT,
+    
+], getAulaById);
 
-router.put('/', updateAulaById);
+router.put('/', [
+    validarJWT,
+    
+], updateAulaById);
 
-router.delete('/', deleteAulaById);
+router.delete('/', [
+    validarJWT,
+    
+], deleteAulaById);
 
 module.exports = router;
