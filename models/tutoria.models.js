@@ -3,10 +3,6 @@ const Aula = require('./aula.model');
 const SolicitudTutoria = require('./solicitud_tutoria.model');
 
 const TutoriaSchema = new mongoose.Schema({
-    id: {
-        type: Number,
-        required: true
-    },
     aula: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Aula',
