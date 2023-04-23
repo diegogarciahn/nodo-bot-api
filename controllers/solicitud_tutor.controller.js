@@ -20,6 +20,7 @@ const crearSolicitudTutor = async (req, res) => {
 
 const obtenerSolicitudTutorId = async (req, res) => {
     const { id } = req.params;
+    console.log(req.params);
     try {
       const solicitudTutor = await SolicitudTutor.findById(id);
       if (!solicitudTutor) {
