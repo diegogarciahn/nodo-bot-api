@@ -50,7 +50,6 @@ const login = async (req = request, res = response) => {
 const getUser = async (req = request, res = response) => {
 
     const uid = req.uid;
-    console.log(req.uid);
     try {
         const user = await Usuario.findById(uid);
 
@@ -65,7 +64,7 @@ const getUser = async (req = request, res = response) => {
 
 
         return res.status(200).json({
-            usuario: user.usuario
+            usuario: user
         });
     } catch (error) {
         console.log(error);
