@@ -17,7 +17,6 @@ const generarJWT = (uid = '', id = '') => {
             }
         });
 
-
     })
 }
 
