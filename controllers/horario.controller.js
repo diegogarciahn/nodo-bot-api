@@ -14,7 +14,7 @@ const crearHorario = async (req, res) => {
   try {
     const nuevoHorario = new Horario(req.body);
     await nuevoHorario.save();
-    res.status(201).json({ mensaje: 'Permiso Creado con exito', horario: nuevoHorario});
+    res.status(201).json({ mensaje: 'Horario creado con exito', horario: nuevoHorario});
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al crear el horario ', error: error.message });
   }
