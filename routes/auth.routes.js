@@ -1,6 +1,6 @@
 'Ruta: /api/auth';
 const { Router } = require('express');
-const { login, getUser } = require('../controllers/auth.controller');
+const {login, getUser} = require('../controllers/auth.controller');
 const { validarJWT } = require('../middlewares/validarJWT.middleware');
 
 const router = Router();
