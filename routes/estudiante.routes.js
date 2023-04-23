@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { validarJWT } = require('../middlewares/validarJWT.middleware');
-const { crearEstudiante, obtenerEstudiantes, obtenerEstudiantePorId, actualizarEstudiante, borrarEstudiante } = require('../controllers/estudiante.controller'); // Importar el controlador de Estudiante
+const { crearEstudiante, obtenerEstudiantes, obtenerEstudiantePorId, actualizarEstudiante, borrarEstudiante, obtenerTutores } = require('../controllers/estudiante.controller'); // Importar el controlador de Estudiante
 const router = Router();
 
 router.post('/', [
@@ -17,6 +17,11 @@ router.get('/', [
     validarJWT,
     
 ], obtenerEstudiantes); // Ruta para obtener todos los estudiantes
+
+router.get('/tutores', [
+    validarJWT,
+    
+], obtenerTutores); // Ruta para obtener todos los tutores
 
 router.get('/search', [
     validarJWT,
