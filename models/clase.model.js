@@ -6,6 +6,8 @@ const ClaseSchema = new mongoose.Schema({
     nombre_clase: { type: String, required: true },
     codigo_clase: { type: String, required: true },
     carrera: [{ type: String }]
+},{
+    collection: 'clase'
 });
 
 // Crear y exportar el modelo

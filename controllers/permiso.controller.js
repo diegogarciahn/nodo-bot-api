@@ -1,10 +1,10 @@
-const Permiso = require('./models/permiso.js');
+const Permiso = require('../models/permiso.models');
 
 // Controlador para obtener todos los permisos
 const obtenerPermisos = async (req, res) => {
   try {
     const permisos = await Permiso.find();
-    res.status(200).json({permisos});
+    res.status(200).json(permisos);
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al obtener las permisos', error: error.message });
   }

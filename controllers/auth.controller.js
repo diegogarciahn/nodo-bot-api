@@ -30,7 +30,7 @@ const login = async (req = request, res = response) => {
             });
         }
 
-        const token = await generarJWT(usuario, password);
+        const token = await generarJWT(user.idUsuario);
 
         return res.status(200).json({
             token: token,
@@ -53,7 +53,7 @@ const getUser = async (req = request, res = response) => {
     try {
         const user = await Usuario.findOne({
             where: {
-                id: uid
+                idUsuario: uid
             },
         });
 
