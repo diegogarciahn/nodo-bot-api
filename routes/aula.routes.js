@@ -7,7 +7,7 @@ const router = Router();
 router.post('/', [
     validarJWT,
     check('numero', 'El numero de aula es obligatorio.').notEmpty(),
-    check('numero', 'El numero de aula es entero.').isInt(),
+    check('numero', 'El numero de aula es texto.').isString(),
 ], createAula);
 
 router.get('/', [
