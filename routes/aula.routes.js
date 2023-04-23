@@ -1,6 +1,7 @@
 'Ruta: /api/aula';
 const { Router } = require('express');
 const { validarJWT } = require('../middlewares/validarJWT.middleware');
+const { check } = require('express-validator');
 const { createAula, getAllAulas, getAulaById, updateAulaById, deleteAulaById } = require('../controllers/aula.controller');
 const router = Router();
 
