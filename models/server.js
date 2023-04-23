@@ -1,7 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const { dbConnection } = require('../database/config').dbConnection();
-
+const https = require('https');
+const fs = require('fs');
+const path = require('path');
 
 class Server {
 
@@ -59,11 +61,15 @@ class Server {
     }
 
     listen() {
-        this.app.listen(this.port, () => {
-            console.log('Servidor corriendo en puerto: ', this.port);
+        const opcionesHttps  = {
+            key:  fs.readFileSync(path.join(__dirname, '../Certificado', 'key.pem')),
+            cert: fs.readFileSync(path.join(__dirname, '../Certificado', 'cert.cer'))
+        };
+        const server = https.createServer(opcionesHttps, this.app);
+        server.listen(this.port, () => {
+            console.log('Servidor HTTPS corriendo en puerto: ', this.port);
         });
     }
-
 }
 
 module.exports = Server;
