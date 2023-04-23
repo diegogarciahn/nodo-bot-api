@@ -31,8 +31,8 @@ const login = async (req = request, res = response) => {
             });
         }
 
-        const token = await generarJWT(user.id);
-
+        const token = await generarJWT(user._id.valueOf());
+        
         return res.status(200).json({
             token: token,
             usuario: user.nombre_usuario,
@@ -50,13 +50,8 @@ const login = async (req = request, res = response) => {
 const getUser = async (req = request, res = response) => {
 
     const uid = req.uid;
-
     try {
-        const user = await Usuario.findOne({
-            where: {
-                idUsuario: uid
-            },
-        });
+        const user = await Usuario.findById(uid);
 
         if (!user) {
             return res.status(404).json({
@@ -66,7 +61,7 @@ const getUser = async (req = request, res = response) => {
 
 
         return res.status(200).json({
-            usuario: user.usuario
+            usuario: user
         });
     } catch (error) {
         console.log(error);

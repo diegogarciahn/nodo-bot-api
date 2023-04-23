@@ -26,9 +26,11 @@ const getTutoria = async (req, res, next) => {
 // Controlador para crear una nueva tutoría
 const createTutoria = async (req, res, next) => {
     try{
-        const {id, aula, solicitud_tutoria} = req.body;
-        const tutoria = new Tutoria({
-            id,
+        const {aula, solicitud_tutoria} = req.body;
+        if (!aula || !solicitud_tutoria) {
+            return res.status(400).json({ error: 'Los parámetros aula y solicitud_tutoria son requeridos.' });
+        }
+        const tutoria = new Tutoria({            
             aula,
             solicitud_tutoria,
         });
@@ -43,7 +45,7 @@ const createTutoria = async (req, res, next) => {
 const updateTutoria = async (req, res, next) => {
     try{
         const { aula, solicitud_tutoria } = req.body;
-        const tutoria = await Tutoria.findById(req.params.id);
+        const tutoria = await Tutoria.findById(req.params._id);
         if (!tutoria) {
             return res.status(404).json({ message: "Tutoría no encontrada" });
         }

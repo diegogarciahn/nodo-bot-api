@@ -13,7 +13,6 @@ router.post('/', [
 
 router.get('/', [
     validarJWT,
-    
 ], getAllAulas);
 
 router.get('/buscar', [

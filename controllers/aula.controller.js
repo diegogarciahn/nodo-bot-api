@@ -32,6 +32,7 @@ const getAllAulas = async (req, res) => {
 
 // Obtener una aula por ID
 const getAulaById = async (req, res) => {
+    console.log(req);
     try {
         const aula = await Aula.findById(req.params.id);
         if (!aula) {
