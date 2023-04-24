@@ -22,17 +22,18 @@ const solicitudTutoriasSchema = new Schema({
   tutor: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Estudiante',
-    required: false,
-    autopopulate: true,
-    default: null
+    required: true,
+    autopopulate: true
   },
-  estado: { type: String, required: true, default: 0},
   horario_solicitado: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Horario',
     required: true,
     autopopulate: true
   },
+  estado: { type: String, required: false, default: '0'},
+  fecha_hora: { type: Date, required: false },
+  fecha_hora_resuelto: { type: Date, required: false , default: null},
 },{
   collection: 'solicitud_tutoria'
 });

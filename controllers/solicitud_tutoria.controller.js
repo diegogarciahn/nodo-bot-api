@@ -7,8 +7,11 @@ const crearSolicitudTutoria = async (req, res) => {
       estudiante: req.body.estudiante,
       clase: req.body.clase,
       tutor: req.body.tutor,
-      estado: req.body.estado,
       horario_solicitado: req.body.horario_solicitado,
+      estado:  '0', 
+      fecha_hora: req.body.fecha_hora || Date.now(),
+      fecha_hora_resuelto: req.body.fecha_hora_resuelto,
+      
     });
     await nuevaSolicitudTutoria.save();
     res.json({ mensaje: 'Solicitud de tutoría creada exitosamente' });
@@ -45,26 +48,50 @@ const obtenerSolicitudTutoriaId = async (req, res) => {
   }
 };
 
-// Controlador para actualizar una solicitud de tutoría por su id
+// Controlador para actualizar una solicitud de tutoría por su id Estudiante
 const actualizarSolicitudTutoria = async (req, res) => {
   const { id } = req.params;
-  const { estudiante, clase, tutor,estado,horario_solicitado } = req.body;
+  const { estudiante, clase, tutor,horario_solicitado } = req.body;
   try {
-    const solicitudTutorActualizada = await SolicitudTutor.findByIdAndUpdate(
+    const solicitudTutorActualizada = await SolicitudTutorias.findByIdAndUpdate(
       id,
       {
         estudiante,
         clase,
         tutor,
-        estado,
         horario_solicitado
       },
       { new: true }
     );
     if (!solicitudTutorActualizada) {
-      return res.status(404).json({ error: 'Solicitud de tutor no encontrada' });
+      return res.status(404).json({ error: 'Solicitud de tutoria no encontrada' });
     }
-    res.json(solicitudTutorActualizada);
+    return res.status(200).send('Actualizada con éxito');
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const actualizarSolicitudTutoriaAdmin = async (req, res) => {
+  const { id } = req.params;
+  try {
+    if (!req.body.estado ) {
+      return res.status(400).json({ error: 'El campos estado es obligatorio'});
+    }
+    const solicitudTutoriaActualizada = await SolicitudTutorias.findByIdAndUpdate(
+      id,
+      {
+        estado: req.body.estado,
+        fecha_hora_resuelto: Date.now(),
+      },
+      { new: true }
+    );
+    
+    if (!solicitudTutoriaActualizada) {
+      return res.status(404).json({ error: 'Solicitud de tutoria no encontrada' });
+    }
+    
+    return res.status(200).send('Actualizada con éxito');
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -80,7 +107,7 @@ const eliminarSolicitudTutoria = async (req, res) => {
     if (!solicitudEliminada) {
       return res.status(404).json({ error: 'Solicitud no encontrada' });
     }
-    res.json(solicitudEliminada);
+    return res.status(200).send('Eliminada con éxito');
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -91,5 +118,6 @@ module.exports = {
     obtenerSolicitudesTutorias,
     obtenerSolicitudTutoriaId,
     actualizarSolicitudTutoria,
+    actualizarSolicitudTutoriaAdmin,
     eliminarSolicitudTutoria,
   };
