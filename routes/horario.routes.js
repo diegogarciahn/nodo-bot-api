@@ -6,7 +6,7 @@ const { crearHorario, obtenerHorarios, actualizarHorario, eliminarHorario  } = r
 
 router.post('/crearHorarios',
 [validarJWT,
-check('dia', 'El dia para este horario es obligatorio').isEmpty(), 
+check('dia', 'El dia para este horario es obligatorio').notEmpty(), 
 check('hora', 'La hora es obligatorio').notEmpty()], 
 crearHorario); // Ruta para crear un nuevo horario
 

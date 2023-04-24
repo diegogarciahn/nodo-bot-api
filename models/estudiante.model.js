@@ -9,6 +9,7 @@ const EstudianteSchema = new mongoose.Schema({
     estudiante: { type: Number, default: 0 },
     carrera: [{ type: String }],
     telefono: { type: String },
+    id_telegram: { type: String },
     horario_tutor: [{ type: String }]
 },{
     collection: 'estudiante'
