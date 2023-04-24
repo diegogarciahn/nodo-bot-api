@@ -53,6 +53,9 @@ const getUser = async (req = request, res = response) => {
     try {
         const user = await Usuario.findById(uid);
 
+        Usuario.findById(ObjectId(uid)).then(doc => {
+            console.log(doc)
+        })
         if (!user) {
             return res.status(404).json({
                 msg: "No se encontró el usuario."
