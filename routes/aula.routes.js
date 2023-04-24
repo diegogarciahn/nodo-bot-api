@@ -24,6 +24,9 @@ router.get('/buscar', [
 
 router.put('/', [
     validarJWT,
+    check('numero', 'El numero de aula es obligatorio.').notEmpty(),
+    check('numero', 'El numero de aula es texto.').isString(),
+    validarCampos
     
 ], updateAulaById);
 
