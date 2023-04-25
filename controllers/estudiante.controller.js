@@ -48,6 +48,22 @@ const obtenerTutores = async (req, res) => {
     }
 };
 
+const obtenerEstudiantesNoTutores = async (req, res) => {
+    try {
+        const estudiantes = await Estudiante.find({
+            tutor: 0,
+            activo: 1
+        });
+        return res.status(200).json({
+            estudiantes
+        });
+    } catch (error) {
+        return res.status(500).json({
+            mensaje: 'Error al obtener los estudiantes', error: error.message
+        });
+    }
+};
+
 // Obtener estudiante por ID
 const obtenerEstudiantePorId = async (req, res) => {
     try {
@@ -98,6 +114,7 @@ module.exports = {
     crearEstudiante,
     obtenerEstudiantes,
     obtenerTutores,
+    obtenerEstudiantesNoTutores,
     obtenerEstudiantePorId,
     actualizarEstudiante,
     borrarEstudiante

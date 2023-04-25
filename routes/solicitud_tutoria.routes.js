@@ -3,7 +3,7 @@ const router = express.Router();
 const { validarJWT } = require('../middlewares/validarJWT.middleware');
 const { crearSolicitudTutoria, obtenerSolicitudesTutorias, obtenerSolicitudTutoriaId,obtenerSolicitudesPorEstado, actualizarSolicitudTutoria, actualizarSolicitudTutoriaAdmin, eliminarSolicitudTutoria } = require('../controllers/solicitud_tutoria.controller'); 
 
-router.post('/crearSolicitudTutoria', [validarJWT], crearSolicitudTutoria); 
+router.post('/crearSolicitudTutoria', /*[validarJWT],*/ crearSolicitudTutoria); 
 router.get('/obtenerSolicitudesTutorias', [validarJWT], obtenerSolicitudesTutorias); 
 router.get('/obtenerSolicitudTutoria/:id', [validarJWT],obtenerSolicitudTutoriaId); 
 router.get('/obtenerSolicitudTutoriaEs/:estado', [validarJWT],obtenerSolicitudesPorEstado); 

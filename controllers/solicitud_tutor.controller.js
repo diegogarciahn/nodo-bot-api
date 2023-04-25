@@ -38,10 +38,10 @@ const obtenerSolicitudTutorId = async (req, res) => {
     }
   };
 
-  const obtenerSolicitudesPorEstado = async (req, res) => {
-    const { estado } = req.params;
+  const obtenerSolicitudesPorClase = async (req, res) => {
+    const { clase } = req.params;
     try {
-      const solicitudes = await SolicitudTutor.find({ estado });
+      const solicitudes = await SolicitudTutor.find({ clase, estado: 1  });
       res.json(solicitudes);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -105,7 +105,7 @@ const obtenerSolicitudesTutores = async (req, res) => {
     crearSolicitudTutor,
     obtenerSolicitudTutorId,
     obtenerSolicitudesTutores,
-    obtenerSolicitudesPorEstado,
+    obtenerSolicitudesPorClase,
     actualizarSolicitudTutor,
     eliminarSolicitudTutor,
   };
