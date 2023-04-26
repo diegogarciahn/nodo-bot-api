@@ -48,6 +48,15 @@ const obtenerSolicitudTutorId = async (req, res) => {
     }
   };
   
+const obtenerSolicitudesPorEstudiante = async (req, res) => {
+    const { estudiante } = req.params;
+    try {
+      const solicitudes = await SolicitudTutor.find({ estudiante });
+      res.json(solicitudes);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
 
   // Controlador para obtener todas las solicitudes de tutoría
 const obtenerSolicitudesTutores = async (req, res) => {
@@ -106,6 +115,7 @@ const obtenerSolicitudesTutores = async (req, res) => {
     obtenerSolicitudTutorId,
     obtenerSolicitudesTutores,
     obtenerSolicitudesPorClase,
+    obtenerSolicitudesPorEstudiante,
     actualizarSolicitudTutor,
     eliminarSolicitudTutor,
   };

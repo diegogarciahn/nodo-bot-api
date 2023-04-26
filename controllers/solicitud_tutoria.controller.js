@@ -35,9 +35,20 @@ const obtenerSolicitudesTutorias = async (req, res) => {
 };
 
 const obtenerSolicitudesPorEstado = async (req, res) => {
-  const { estado } = req.params;
+  const { estudiante } = req.params;
   try {
-    const solicitudes = await SolicitudTutorias.find({ estado });
+    const solicitudes = await SolicitudTutorias.find({ estudiante, estado: 1 });
+    res.json(solicitudes);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+const obtenerSolicitudesPorEstudiante = async (req, res) => {
+  const { estudiante } = req.params;
+  try {
+    const solicitudes = await SolicitudTutorias.find({ estudiante });
     res.json(solicitudes);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -129,6 +140,7 @@ module.exports = {
     obtenerSolicitudTutoriaId,
     obtenerSolicitudesPorEstado,
     actualizarSolicitudTutoria,
+    obtenerSolicitudesPorEstudiante,
     actualizarSolicitudTutoriaAdmin,
     eliminarSolicitudTutoria,
   };

@@ -1,19 +1,51 @@
 const Estudiante = require('../models/estudiante.model'); // Importar el modelo de Estudiante
+const Carrera = require('../models/carrera.model');
 
 // Crear un nuevo estudiante
 const crearEstudiante = async (req, res) => {
     try {
-        const nuevoEstudiante = new Estudiante(req.body);
-        await nuevoEstudiante.save();
-        return res.status(201).json({
-            mensaje: 'Estudiante creado exitosamente', estudiante: nuevoEstudiante
-        });
+      const { numero_cuenta, nombre, carrera, telefono, id_telegram } = req.body;
+      if (!numero_cuenta || !nombre || !carrera) {
+        return res.status(400).json({ mensaje: 'Debe proporcionar número de cuenta, nombre y carrera' });
+      }
+      const carreraExiste = await Carrera.findById(carrera);
+      if (!carreraExiste) {
+        return res.status(404).json({ mensaje: 'La carrera proporcionada no existe' });
+      }
+      const nuevoEstudiante = new Estudiante({
+        numero_cuenta,
+        nombre,
+        estado: '0',
+        tutor: '0',
+        estudiante: '0',
+        carrera,
+        telefono,
+        id_telegram
+      });
+      await nuevoEstudiante.save();
+      res.json({ mensaje: 'Estudiante creado exitosamente' });
     } catch (error) {
-        return res.status(500).json({
-            mensaje: 'Error al crear el estudiante', error: error.message
-        });
+      console.log(error);
+      res.status(500).send('Hubo un error al crear el estudiante');
     }
-};
+  };
+
+  const obtenerEstudiantePorTelegramId = async (req, res) => {
+    try {
+      const id_telegram = req.params.id_telegram;
+      const estudiante = await Estudiante.findOne({ id_telegram: id_telegram })
+        .populate('carrera', 'nombre_carrera'); // Popula el campo carrera y solo trae el nombre de la carrera
+  
+      if (!estudiante) {
+        return res.status(404).json({ message: 'No se encontró ningún estudiante con el id_telegram proporcionado.' });
+      }
+  
+      return res.json(estudiante);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Error al obtener el estudiante.' });
+    }
+  };
 
 // Leer todos los estudiantes
 const obtenerEstudiantes = async (req, res) => {
@@ -117,5 +149,6 @@ module.exports = {
     obtenerEstudiantesNoTutores,
     obtenerEstudiantePorId,
     actualizarEstudiante,
+    obtenerEstudiantePorTelegramId,
     borrarEstudiante
 };

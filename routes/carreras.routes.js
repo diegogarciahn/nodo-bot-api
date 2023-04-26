@@ -7,7 +7,7 @@ const router = Router();
 
 router.post('/', createCarrera);
 
-router.get('/', getAllCarreras);
+router.get('/obtenerCarreras', getAllCarreras);
 
 router.get('/buscar', getCarreraById);
 
