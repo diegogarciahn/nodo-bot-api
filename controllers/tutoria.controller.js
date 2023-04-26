@@ -1,5 +1,80 @@
 const Tutoria = require('../models/tutoria.models');
+const SolicitudTutorias = require('../models/solicitud_tutoria.model.js');
+const Estudiante = require('../models/estudiante.model');
 
+// Controlador para obtener todas las tutorías de un estudiante tutor
+const getTutoriasEstudianteTutor = async (req, res, next) => {
+    try {
+        const idTutor = "64494f9cf6032eb0e17eff44"; //sera reemplazo por el id del tutor que este logueado
+        const tutorias = await Tutoria.find().populate('aula', 'solicitud_tutoria');
+        const tutoriasAgrupadas = {};
+        tutorias.forEach(tutoria => {
+            const tutor = tutoria.solicitud_tutoria.tutor;
+            const clase = tutoria.solicitud_tutoria.clase;
+            const active = tutoria.activa;
+            if (tutor._id.toString() === idTutor) {
+                const claveAgrupacion = `${tutor.numero_cuenta}-${clase._id}`;
+                if (!tutoriasAgrupadas[claveAgrupacion]) {
+                    tutoriasAgrupadas[claveAgrupacion] = {
+                        numerocuenta: tutor.numero_cuenta,
+                        nombretutor: tutor.nombre,
+                        clase: clase.nombre_clase,
+                        codigoclase: clase.codigo_clase,
+                        activa: active
+                    };
+                }
+            }
+        });
+        const respuesta = Object.values(tutoriasAgrupadas);
+
+        // Ordenar por la propiedad activa (true al inicio)
+        respuesta.sort((a, b) => b.activa - a.activa);
+        if (respuesta.length > 0) {
+            res.status(200).json(respuesta);
+        } else {
+            res.status(404).json({ message: "No se encontraron tutorías" });
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// Controlador para obtener todas las tutorías de un estudiante estudiante
+const getTutoriasEstudianteEstudiante = async (req, res, next) => {
+    try {
+        const idEstudiante = "643ad74e81eae928e53cb3fe"; //sera reemplazo por el id del estudiante que este logueado
+        const tutorias = await Tutoria.find().populate('aula', 'solicitud_tutoria');
+        const tutoriasAgrupadas = {};
+        tutorias.forEach(tutoria => {
+            const estudiante = tutoria.solicitud_tutoria.estudiante;
+            const clase = tutoria.solicitud_tutoria.clase;
+            const active = tutoria.activa;
+            if (estudiante._id.toString() === idEstudiante) {
+                const claveAgrupacion = `${estudiante.numero_cuenta}-${clase._id}`;
+                if (!tutoriasAgrupadas[claveAgrupacion]) {
+                    tutoriasAgrupadas[claveAgrupacion] = {
+                        numerocuenta: estudiante.numero_cuenta,
+                        nombreestudiante: estudiante.nombre,
+                        clase: clase.nombre_clase,
+                        codigoclase: clase.codigo_clase,
+                        activa: active
+                    };
+                }
+            }
+        });
+        const respuesta = Object.values(tutoriasAgrupadas);
+
+        // Ordenar por la propiedad activa (true al inicio)
+        respuesta.sort((a, b) => b.activa - a.activa);
+        if (respuesta.length > 0) {
+            res.status(200).json(respuesta);
+        } else {
+            res.status(404).json({ message: "No se encontraron tutorías" });
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
 // Controlador para obtener todas las tutorías
 const getTutorias = async (req, res, next) => {
     try{
@@ -72,6 +147,8 @@ const deleteTutoria = async (req, res, next) => {
 };
 
 module.exports = {
+    getTutoriasEstudianteTutor,
+    getTutoriasEstudianteEstudiante,
     getTutorias,
     getTutoria,
     createTutoria,

@@ -4,7 +4,12 @@ const mongoose = require('mongoose');
 const ClaseSchema = new mongoose.Schema({
     nombre_clase: { type: String, required: true },
     codigo_clase: { type: String, required: true },
-    carrera: [{ type: String }]
+    carrera: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Carrera',
+        required: true,
+        autopopulate: true
+    }
 },{
     collection: 'clase'
 });
