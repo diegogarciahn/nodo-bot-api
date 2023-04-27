@@ -33,7 +33,7 @@ const getAllAulas = async (req, res) => {
 // Obtener una aula por ID
 const getAulaById = async (req, res) => {
     try {
-        const aula = await Aula.findById(req.params.id);
+        const aula = await Aula.findById(req.query.id);
         if (!aula) {
             return res.status(404).json({ message: 'Aula no encontrada' });
         }
@@ -46,8 +46,9 @@ const getAulaById = async (req, res) => {
 
 // Actualizar una aula por ID
 const updateAulaById = async (req, res) => {
+    
     try {
-        const aula = await Aula.findByIdAndUpdate(req.params.id, req.body, {
+        const aula = await Aula.findByIdAndUpdate(req.query.id, req.body, {
             new: true,
         });
         if (!aula) {
@@ -63,7 +64,7 @@ const updateAulaById = async (req, res) => {
 // Eliminar una aula por ID
 const deleteAulaById = async (req, res) => {
     try {
-        const aula = await Aula.findByIdAndDelete(req.params.id);
+        const aula = await Aula.findByIdAndDelete(req.query.id);
         if (!aula) {
             return res.status(404).json({ message: 'Aula no encontrada' });
         }

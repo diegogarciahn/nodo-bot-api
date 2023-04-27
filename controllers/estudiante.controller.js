@@ -18,7 +18,9 @@ const crearEstudiante = async (req, res) => {
 // Leer todos los estudiantes
 const obtenerEstudiantes = async (req, res) => {
     try {
-        const estudiantes = await Estudiante.find();
+        const estudiantes = await Estudiante.find({
+            activo: 1
+        });
         return res.status(200).json({
             estudiantes
         });
@@ -46,10 +48,26 @@ const obtenerTutores = async (req, res) => {
     }
 };
 
+const obtenerEstudiantesNoTutores = async (req, res) => {
+    try {
+        const estudiantes = await Estudiante.find({
+            tutor: 0,
+            activo: 1
+        });
+        return res.status(200).json({
+            estudiantes
+        });
+    } catch (error) {
+        return res.status(500).json({
+            mensaje: 'Error al obtener los estudiantes', error: error.message
+        });
+    }
+};
+
 // Obtener estudiante por ID
 const obtenerEstudiantePorId = async (req, res) => {
     try {
-        const estudiante = await Estudiante.findById(req.params.id);
+        const estudiante = await Estudiante.findById(req.query.id);
         if (!estudiante) {
             return res.status(404).json({
                 mensaje: 'Estudiante no encontrado'
@@ -66,7 +84,7 @@ const obtenerEstudiantePorId = async (req, res) => {
 // Actualizar un estudiante por su ID
 const actualizarEstudiante = async (req, res) => {
     try {
-        const estudianteActualizado = await Estudiante.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const estudianteActualizado = await Estudiante.findByIdAndUpdate(req.query.id, req.body, { new: true });
         return res.status(200).json({
             mensaje: 'Estudiante actualizado exitosamente', estudiante: estudianteActualizado
         });
@@ -80,7 +98,7 @@ const actualizarEstudiante = async (req, res) => {
 // Borrar un estudiante por su ID
 const borrarEstudiante = async (req, res) => {
     try {
-        await Estudiante.findByIdAndDelete(req.params.id);
+        await Estudiante.findByIdAndDelete(req.query.id);
         return res.status(200).json({
             mensaje: 'Estudiante borrado exitosamente'
         });
@@ -96,6 +114,7 @@ module.exports = {
     crearEstudiante,
     obtenerEstudiantes,
     obtenerTutores,
+    obtenerEstudiantesNoTutores,
     obtenerEstudiantePorId,
     actualizarEstudiante,
     borrarEstudiante

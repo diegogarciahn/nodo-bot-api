@@ -7,7 +7,6 @@ const Horario = require('./horario.models');
 const Schema = mongoose.Schema;
 
 const solicitudTutoriasSchema = new Schema({
-  id: { type: Number, required: true },
   estudiante: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Estudiante',
@@ -23,17 +22,18 @@ const solicitudTutoriasSchema = new Schema({
   tutor: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Estudiante',
-    required: false,
-    autopopulate: true,
-    default: null
+    required: true,
+    autopopulate: true
   },
-  estado: { type: String, required: true },
   horario_solicitado: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Horario',
     required: true,
     autopopulate: true
   },
+  estado: { type: String, required: false, default: '0'},
+  fecha_hora: { type: Date, required: false },
+  fecha_hora_resuelto: { type: Date, required: false , default: null},
 },{
   collection: 'solicitud_tutoria'
 });

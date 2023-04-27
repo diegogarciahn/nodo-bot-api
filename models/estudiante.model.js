@@ -7,9 +7,20 @@ const EstudianteSchema = new mongoose.Schema({
     activo: { type: Number, default: 0 },
     tutor: { type: Number, default: 0 },
     estudiante: { type: Number, default: 0 },
-    carrera: [{ type: String }],
+    carrera: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Carrera',
+        required: true,
+        autopopulate: true
+    },
     telefono: { type: String },
-    horario_tutor: [{ type: String }]
+    id_telegram: { type: String },
+    horario_tutor: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Horario',
+        required: true,
+        autopopulate: true
+    }
 },{
     collection: 'estudiante'
 });
