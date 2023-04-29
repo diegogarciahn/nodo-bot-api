@@ -4,48 +4,48 @@ const Carrera = require('../models/carrera.model');
 // Crear un nuevo estudiante
 const crearEstudiante = async (req, res) => {
     try {
-      const { numero_cuenta, nombre, carrera, telefono, id_telegram } = req.body;
-      if (!numero_cuenta || !nombre || !carrera) {
-        return res.status(400).json({ mensaje: 'Debe proporcionar número de cuenta, nombre y carrera' });
-      }
-      const carreraExiste = await Carrera.findById(carrera);
-      if (!carreraExiste) {
-        return res.status(404).json({ mensaje: 'La carrera proporcionada no existe' });
-      }
-      const nuevoEstudiante = new Estudiante({
-        numero_cuenta,
-        nombre,
-        estado: '0',
-        tutor: '0',
-        estudiante: '0',
-        carrera,
-        telefono,
-        id_telegram
-      });
-      await nuevoEstudiante.save();
-      res.json({ mensaje: 'Estudiante creado exitosamente' });
+        const { numero_cuenta, nombre, carrera, telefono, id_telegram } = req.body;
+        if (!numero_cuenta || !nombre || !carrera) {
+            return res.status(400).json({ mensaje: 'Debe proporcionar número de cuenta, nombre y carrera' });
+        }
+        const carreraExiste = await Carrera.findById(carrera);
+        if (!carreraExiste) {
+            return res.status(404).json({ mensaje: 'La carrera proporcionada no existe' });
+        }
+        const nuevoEstudiante = new Estudiante({
+            numero_cuenta,
+            nombre,
+            estado: '0',
+            tutor: '0',
+            estudiante: '0',
+            carrera,
+            telefono,
+            id_telegram
+        });
+        await nuevoEstudiante.save();
+        res.json({ mensaje: 'Estudiante creado exitosamente' });
     } catch (error) {
-      console.log(error);
-      res.status(500).send('Hubo un error al crear el estudiante');
+        console.log(error);
+        res.status(500).send('Hubo un error al crear el estudiante');
     }
-  };
+};
 
-  const obtenerEstudiantePorTelegramId = async (req, res) => {
+const obtenerEstudiantePorTelegramId = async (req, res) => {
     try {
-      const id_telegram = req.params.id_telegram;
-      const estudiante = await Estudiante.findOne({ id_telegram: id_telegram })
-        .populate('carrera', 'nombre_carrera'); // Popula el campo carrera y solo trae el nombre de la carrera
-  
-      if (!estudiante) {
-        return res.status(404).json({ message: 'No se encontró ningún estudiante con el id_telegram proporcionado.' });
-      }
-  
-      return res.json(estudiante);
+        const id_telegram = req.params.id_telegram;
+        const estudiante = await Estudiante.findOne({ id_telegram: id_telegram })
+            .populate('carrera', 'nombre_carrera'); // Popula el campo carrera y solo trae el nombre de la carrera
+
+        if (!estudiante) {
+            return res.status(404).json({ message: 'No se encontró ningún estudiante con el id_telegram proporcionado.' });
+        }
+
+        return res.json(estudiante);
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Error al obtener el estudiante.' });
+        console.error(error);
+        return res.status(500).json({ message: 'Error al obtener el estudiante.' });
     }
-  };
+};
 
 // Leer todos los estudiantes
 const obtenerEstudiantes = async (req, res) => {
@@ -141,6 +141,19 @@ const borrarEstudiante = async (req, res) => {
     }
 };
 
+const servirEstudiantes = async (req, res) => {
+    try {
+        const estudiantes = await Estudiante.find({
+            activo: 1
+        });
+        return res.render('verclases');
+    } catch (error) {
+        return res.status(500).json({
+            mensaje: 'Error al obtener los estudiantes', error: error.message
+        });
+    }
+}
+
 // Exportar las funciones del controlador
 module.exports = {
     crearEstudiante,
@@ -150,5 +163,6 @@ module.exports = {
     obtenerEstudiantePorId,
     actualizarEstudiante,
     obtenerEstudiantePorTelegramId,
-    borrarEstudiante
+    borrarEstudiante,
+    servirEstudiantes
 };
