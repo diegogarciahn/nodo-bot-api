@@ -1,4 +1,5 @@
 const Aula = require('../models/aula.model');
+const { request, response } = require('express');
 
 // Crear nueva aula
 const createAula = async (req, res) => {
@@ -17,7 +18,7 @@ const getAllAulas = async (req, res) => {
     try {
         const aulas = await Aula.find();
 
-        if(aulas.length === 0) {
+        if (aulas.length === 0) {
             return res.status(404).json({
                 msg: 'No hay aulas'
             });
@@ -32,9 +33,8 @@ const getAllAulas = async (req, res) => {
 
 // Obtener una aula por ID
 const getAulaById = async (req, res) => {
-    console.log(req);
     try {
-        const aula = await Aula.findById(req.params.id);
+        const aula = await Aula.findById(req.query.id);
         if (!aula) {
             return res.status(404).json({ message: 'Aula no encontrada' });
         }
@@ -47,8 +47,9 @@ const getAulaById = async (req, res) => {
 
 // Actualizar una aula por ID
 const updateAulaById = async (req, res) => {
+
     try {
-        const aula = await Aula.findByIdAndUpdate(req.params.id, req.body, {
+        const aula = await Aula.findByIdAndUpdate(req.params._id, req.body, {
             new: true,
         });
         if (!aula) {
@@ -62,9 +63,9 @@ const updateAulaById = async (req, res) => {
 };
 
 // Eliminar una aula por ID
-const deleteAulaById = async (req, res) => {
+const deleteAulaById = async (req = request, res) => {
     try {
-        const aula = await Aula.findByIdAndDelete(req.params.id);
+        const aula = await Aula.findByIdAndDelete(req.params._id);
         if (!aula) {
             return res.status(404).json({ message: 'Aula no encontrada' });
         }
@@ -75,10 +76,28 @@ const deleteAulaById = async (req, res) => {
     }
 };
 
+const servirAulas = async (req = request, res = response) => {
+    const aulas = await Aula.find();
+    return res.render('ver_aulas', { aulas })
+}
+
+const crearAulaView = async (req = request, res = response) => {
+    return res.render('crear_aula');
+}
+
+const updateAulaView = async (req = request, res = response) => {
+    const aula = await Aula.findById(req.params._id);
+
+    return res.render('update_aula', { aula });
+}
+
 module.exports = {
     createAula,
     getAllAulas,
     getAulaById,
     updateAulaById,
     deleteAulaById,
+    servirAulas,
+    crearAulaView,
+    updateAulaView
 }

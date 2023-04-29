@@ -15,6 +15,10 @@ const TutoriaSchema = new mongoose.Schema({
         required: true,
         autopopulate: true
     },
+    activa: {
+        type: Boolean,
+        default: true
+    }
 },{
     collection: 'tutoria'
 });

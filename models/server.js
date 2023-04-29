@@ -20,8 +20,12 @@ class Server {
         this.rutaRol = '/api/roles'
         this.rutaHorario = '/api/horario'
         this.rutaPermiso = '/api/permiso'
-        this.rutaSolicitudTutor = '/api/solicitud_tutor';   
+        this.rutaSolicitudTutor = '/api/solicitud_tutor';
         this.rutaSolicitudTutoria = '/api/solicitud_tutoria';
+
+        // Rutas página web
+        this.rutaPaginaClases = '/clases';
+        this.rutaPaginaAulas = '/aulas';
 
         // Midlewares: funciones que siempre se van a ejecutar cuando iniciamos un servidor
         this.middlewares();
@@ -41,6 +45,9 @@ class Server {
         // Directorio público
         this.app.use(express.static('public'));
 
+        this.app.set('view engine', 'html');
+        this.app.engine('html', require('ejs').renderFile);
+        this.app.set('views', path.join(__dirname, '../public'));
     }
 
     // Endpoints 
@@ -58,11 +65,15 @@ class Server {
         this.app.use(this.rutaPermiso, require('../routes/permiso.routes'))
         this.app.use(this.rutaSolicitudTutor, require('../routes/solicitud_tutor.routes'));
         this.app.use(this.rutaSolicitudTutoria, require('../routes/solicitud_tutoria.routes'));
+
+        // Rutas de página
+        this.app.use(this.rutaPaginaClases, require('../routes/clase_views.routes'));
+        this.app.use(this.rutaPaginaAulas, require('../routes/aulas_views.routes'));
     }
 
     listen() {
-        const opcionesHttps  = {
-            key:  fs.readFileSync(path.join(__dirname, '../Certificado', 'key.pem')),
+        const opcionesHttps = {
+            key: fs.readFileSync(path.join(__dirname, '../Certificado', 'key.pem')),
             cert: fs.readFileSync(path.join(__dirname, '../Certificado', 'cert.cer'))
         };
         const server = https.createServer(opcionesHttps, this.app);
