@@ -75,7 +75,7 @@ const actualizarClase = async (req, res) => {
 // Borrar una clase por su ID
 const borrarClase = async (req, res) => {
     try {
-        await Clase.findByIdAndDelete(req.params.id);
+        await Clase.findByIdAndDelete(req.params._id);
         return res.status(200).json({
             mensaje: 'Clase borrada exitosamente'
         });

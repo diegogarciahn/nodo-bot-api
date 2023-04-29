@@ -16,7 +16,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
-
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <title>Clases</title>
 </head>
@@ -63,7 +63,7 @@
                         <th>Código</th>
                         <th>Nombre</th>
                         <th>Carrera</th>
-                        <th>Opciones</th>
+                        <th class="">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -79,7 +79,10 @@
                                 <%= clase.carrera.nombre_carrera %>
                             </td>
                             <td>
-                                <a href="https://localhost:8080/clases/update/<%= clase._id %>"><button class="btn btn-primary">Update</button></a>
+                                <a href="https://localhost:8080/clases/update/<%= clase._id %>"><button
+                                        class="btn btn-primary">Actualizar</button></a>
+                                <button data-id="<%= clase._id %>" data-name="<%= clase.nombre_clase %>"
+                                    class="btn btn-danger btn-eliminar">Eliminar</button>
                             </td>
                         </tr>
                         <% }) %>
@@ -87,7 +90,22 @@
             </table>
         </div>
     </div>
-
+    <div id="modal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="border-radius: 15px;">
+                <div class="modal-header">
+                    <h2>Eliminar Clase</h2>
+                </div>
+                <div class="modal-body">
+                    <p id="clase-eliminar" data-id=""></p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button id="ok" type="button" class="btn btn-primary">Aceptar</button>
+                    <button id="cancel" type="button" class="btn btn-secondary">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script>
     $(document).ready(function () {
@@ -96,6 +114,38 @@
             language: {
                 url: 'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
             },
+        });
+
+        $('.btn-eliminar').on('click', function () {
+            var id = $(this).attr('data-id');
+            var nombre = $(this).attr('data-name');
+            $('#clase-eliminar').attr('data-id', id);
+            $('#clase-eliminar').text('¿Estás seguro de eliminar clase "' + nombre + '"?');
+            $('#modal').show();
+        });
+
+        $('#ok').on('click', function () {
+            var id = $('#clase-eliminar').attr('data-id');
+            console.log(id);
+            const options = {
+                method: 'delete',
+                url: 'https://localhost:8080/api/clases/' + id,
+            }
+
+            axios
+                .request(options)
+                .then(function (response) {
+                    alert('Eliminación exitosa');
+                    location.reload();
+                })
+                .catch(function (error) {
+                    alert(error);
+                    console.log(error);
+                });
+        });
+
+        $('#cancel').on('click', function () {
+            $('#modal').hide();
         });
     });
 </script>

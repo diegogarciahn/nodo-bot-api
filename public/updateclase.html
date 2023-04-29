@@ -54,7 +54,7 @@
             <div class="col-md-2 col-2"></div>
             <div class="col-md-8 col-8  my-5">
                 <form class="form">
-                    <h2>Crear clase</h2>
+                    <h2>Actualizar clase</h2>
                     <div class="form-group my-2">
                         <label for="nombre_clase">Nombre Clase:</label>
                         <input type="text" class="form-control" value="<%= clase.nombre_clase %>" id="nombre_clase"
@@ -128,7 +128,7 @@
             axios
                 .request(options)
                 .then(function (response) {
-                    alert('Creación exitosa');
+                    alert('Actualización exitosa');
                     location.reload();
                 })
                 .catch(function (error) {
