@@ -41,6 +41,9 @@ class Server {
         // Directorio público
         this.app.use(express.static('public'));
 
+        this.app.set('view engine', 'html');
+        this.app.engine('html', require('ejs').renderFile);
+        this.app.set('views', path.join(__dirname,'../public'));
     }
 
     // Endpoints 
