@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const key = require('../database/secretKey');
 
 // GET /users
-const getUsers = async(req, res) => {
+const getUsers = async (req, res) => {
     try {
         const users = await User.find().populate('rol');
         res.status(200).json(users);
@@ -19,7 +19,7 @@ const getUser = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-    res.status(200).json(user);
+        res.status(200).json(user);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -67,15 +67,19 @@ const updateUser = async (req, res) => {
 
 // DELETE /users/:id
 const deleteUser = async (req, res) => {
-try {
-    const user = await User.findByIdAndDelete(req.params.id);
-    if (!user) {
-        return res.status(404).json({ message: "User not found" });
-    }
-    res.status(200).json({ message: "User deleted successfully" });
+    try {
+        const user = await User.findByIdAndDelete(req.params.id);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.status(200).json({ message: "User deleted successfully" });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
+}
+
+const servirclases = async (req = request, res = response) => {
+    return res.render('verclases');
 }
 
 module.exports = {
@@ -84,4 +88,5 @@ module.exports = {
     createUser,
     updateUser,
     deleteUser,
+    servirclases
 };
