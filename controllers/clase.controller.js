@@ -96,6 +96,13 @@ const crearClaseView = async (req = request, res = response) => {
     return res.render('crearclase', {carreras});
 }
 
+const updateClaseView = async (req = request, res = response) => {
+    const clase = await Clase.findById(req.params._id);
+    const carreras = await Carrera.find();
+
+    return res.render('updateclase', {clase, carreras});
+}
+
 // Exportar las funciones del controlador
 module.exports = {
     crearClase,
@@ -104,5 +111,6 @@ module.exports = {
     actualizarClase,
     borrarClase,
     servirclases,
-    crearClaseView
+    crearClaseView,
+    updateClaseView
 };
