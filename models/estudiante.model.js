@@ -16,6 +16,10 @@ const EstudianteSchema = new mongoose.Schema({
     },
     telefono: { type: String },
     id_telegram: { type: String },
+    horario_solicitado: [{ type: mongoose.Schema.Types.ObjectId,
+        ref: 'Horario', 
+        required: true, 
+        autopopulate: true }],
 },{
     collection: 'estudiante',
     timestamp:true

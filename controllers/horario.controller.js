@@ -10,6 +10,41 @@ const obtenerHorarios = async (req, res) => {
   }
 };
 
+const obtenerHorarioPorId = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const horario = await Horario.findById(id);
+    if (!horario) {
+      return res.status(404).json({ mensaje: 'Horario no encontrado' });
+    }
+    res.status(200).json(horario);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ mensaje: 'Error al obtener el horario', error: error.message });
+  }
+};
+
+const obtenerHorarioPorDia = async (req, res) => {
+  try {
+    const {diaa} = req.params;
+    const horarios = await Horario.find({ dia: diaa} );
+    console.log(horarios)
+    if (!horarios.length) {
+      return res.status(404).json({ mensaje: 'Horario no encontrado' });
+    }
+
+    res.status(200).json({horarios});
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ mensaje: 'Error al obtener el horario', error: error.message });
+  }
+};
+
+
+
+
+
 const crearHorario = async (req, res) => {
   try {
     const nuevoHorario = new Horario(req.body);
@@ -42,5 +77,7 @@ module.exports = {
   obtenerHorarios,
   crearHorario,
   actualizarHorario,
+  obtenerHorarioPorId,
+  obtenerHorarioPorDia,
   eliminarHorario
 };

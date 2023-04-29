@@ -20,7 +20,8 @@ const crearEstudiante = async (req, res) => {
         estudiante: '0',
         carrera,
         telefono,
-        id_telegram
+        id_telegram,
+        horario_solicitado: []
       });
       await nuevoEstudiante.save();
       res.json({ mensaje: 'Estudiante creado exitosamente' });
