@@ -78,15 +78,10 @@ const deleteUser = async (req, res) => {
     }
 }
 
-const servirclases = async (req = request, res = response) => {
-    return res.render('verclases');
-}
-
 module.exports = {
     getUsers,
     getUser,
     createUser,
     updateUser,
     deleteUser,
-    servirclases
 };

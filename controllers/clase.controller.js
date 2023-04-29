@@ -85,11 +85,17 @@ const borrarClase = async (req, res) => {
     }
 };
 
+const servirclases = async (req = request, res = response) => {
+    const clases = await Clase.find();
+    return res.render('verclases', { clases });
+}
+
 // Exportar las funciones del controlador
 module.exports = {
     crearClase,
     obtenerClases,
     obtenerClasePorId,
     actualizarClase,
-    borrarClase
+    borrarClase,
+    servirclases
 };
