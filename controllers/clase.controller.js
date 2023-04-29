@@ -61,7 +61,7 @@ const obtenerClasePorId = async (req, res) => {
 // Actualizar una clase por su ID
 const actualizarClase = async (req, res) => {
     try {
-        const claseActualizada = await Clase.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const claseActualizada = await Clase.findByIdAndUpdate(req.params._id, req.body, { new: true });
         return res.status(200).json({
             mensaje: 'Clase actualizada exitosamente', clase: claseActualizada
         });
