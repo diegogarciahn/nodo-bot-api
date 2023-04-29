@@ -1,4 +1,5 @@
 const Clase = require('../models/clase.model'); // Importar el modelo de Clase
+const Carrera = require('../models/carrera.model'); // Importar el modelo de Clase
 
 // Crear una nueva clase
 const crearClase = async (req, res) => {
@@ -90,6 +91,11 @@ const servirclases = async (req = request, res = response) => {
     return res.render('verclases', { clases });
 }
 
+const crearClaseView = async (req = request, res = response) => {
+    const carreras = await Carrera.find();
+    return res.render('crearclase', {carreras});
+}
+
 // Exportar las funciones del controlador
 module.exports = {
     crearClase,
@@ -97,5 +103,6 @@ module.exports = {
     obtenerClasePorId,
     actualizarClase,
     borrarClase,
-    servirclases
+    servirclases,
+    crearClaseView
 };
