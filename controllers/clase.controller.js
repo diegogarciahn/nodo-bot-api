@@ -88,6 +88,9 @@ const borrarClase = async (req, res) => {
 
 const servirclases = async (req = request, res = response) => {
     const clases = await Clase.find();
+
+    console.log(clases);
+
     return res.render('verclases', { clases });
 }
 

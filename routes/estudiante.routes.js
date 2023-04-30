@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const { validarJWT } = require('../middlewares/validarJWT.middleware');
-const { crearEstudiante, obtenerEstudiantes, obtenerEstudiantePorId, actualizarEstudiante,obtenerEstudiantePorTelegramId, borrarEstudiante, obtenerTutores, obtenerEstudiantesNoTutores } = require('../controllers/estudiante.controller'); // Importar el controlador de Estudiante
+const { crearEstudiante, obtenerEstudiantes, obtenerEstudiantePorId, actualizarEstudiante,obtenerEstudiantePorTelegramId, borrarEstudiante,
+     obtenerTutores, obtenerEstudiantesNoTutores, desactivarEstudiante } = require('../controllers/estudiante.controller'); // Importar el controlador de Estudiante
 const router = Router();
 
 router.post('/crearEstudiante',/* [
@@ -29,14 +30,8 @@ router.get('/search', [
     
 ], obtenerEstudiantePorId); // Ruta para obtener un estudiante por su ID
 
-router.put('/', [
-    validarJWT,
-    
-], actualizarEstudiante); // Ruta para actualizar un estudiante por su ID
+router.put('/',actualizarEstudiante); // Ruta para actualizar un estudiante por su ID
 
-router.delete('/', [
-    validarJWT,
-    
-], borrarEstudiante); // Ruta para borrar un estudiante por su ID
+router.delete('/', borrarEstudiante); // Ruta para borrar un estudiante por su ID
 
 module.exports = router;
