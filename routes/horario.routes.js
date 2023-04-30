@@ -10,8 +10,8 @@ check('dia', 'El dia para este horario es obligatorio').notEmpty(),
 check('hora', 'La hora es obligatorio').notEmpty()], 
 crearHorario); // Ruta para crear un nuevo horario
 
-router.get('/obtenerHorarios',[validarJWT], obtenerHorarios); // Ruta para obtener todos los horario
-router.get('/obtenerHorariosId/:id',[validarJWT], obtenerHorarioPorId); 
+router.get('/obtenerHorarios', obtenerHorarios); // Ruta para obtener todos los horario
+router.get('/obtenerHorariosId/:id', obtenerHorarioPorId); 
 router.put('/actualizarHorario/:id', actualizarHorario); // Ruta para actualizar un horario por su ID
 router.delete('/eliminarHorario/:id', eliminarHorario); // Ruta para borrar un horario por su ID
 router.get('/dia/:diaa', obtenerHorarioPorDia);

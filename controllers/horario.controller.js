@@ -28,8 +28,8 @@ const obtenerHorarioPorId = async (req, res) => {
 const obtenerHorarioPorDia = async (req, res) => {
   try {
     const {diaa} = req.params;
-    const horarios = await Horario.find({ dia: diaa} );
-    console.log(horarios)
+    const horarios = await Horario.find({ dia: diaa.trim()} );
+    console.log(diaa.trim())
     if (!horarios.length) {
       return res.status(404).json({ mensaje: 'Horario no encontrado' });
     }
