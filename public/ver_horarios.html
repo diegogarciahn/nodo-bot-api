@@ -41,8 +41,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% horarios.forEach((horario) => {
-                    %>    
+                    <% horarios.forEach((horario)=> {
+                        %>
                         <tr>
                             <td>
                                 <%= horario.dia %>
@@ -53,19 +53,19 @@
                             </td>
 
                             <td>
-                                <button
-                                        class="btn btn-primary">Actualizar</button>
-                                </button>
-                                <button
-                                        class="btn btn-danger">Eliminar</button>
+                                <a href="https://localhost:8080/horarios/actualizar/<%= horario._id %>">
+                                    <button class="btn btn-primary">Actualizar</button>
+                                </a>
+                                <button class="btn btn-danger">Eliminar</button>
                                 </button>
                             </td>
                         </tr>
-                   
-                    <% })%>
+
+                        <% })%>
                 </tbody>
             </table>
         </div>
     </div>
-</body> 
+</body>
+
 </html>
