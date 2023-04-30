@@ -28,14 +28,8 @@ router.get('/search', [
     
 ], obtenerEstudiantePorId); // Ruta para obtener un estudiante por su ID
 
-router.put('/', [
-    validarJWT,
-    
-], actualizarEstudiante); // Ruta para actualizar un estudiante por su ID
+router.put('/',actualizarEstudiante); // Ruta para actualizar un estudiante por su ID
 
-router.delete('/', [
-    validarJWT,
-    
-], borrarEstudiante); // Ruta para borrar un estudiante por su ID
+router.delete('/', borrarEstudiante); // Ruta para borrar un estudiante por su ID
 
 module.exports = router;

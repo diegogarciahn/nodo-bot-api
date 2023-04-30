@@ -26,27 +26,27 @@ const crearEstudiante = async (req, res) => {
       await nuevoEstudiante.save();
       res.json({ mensaje: 'Estudiante creado exitosamente' });
     } catch (error) {
-      console.log(error);
-      res.status(500).send('Hubo un error al crear el estudiante');
+        console.log(error);
+        res.status(500).send('Hubo un error al crear el estudiante');
     }
-  };
+};
 
-  const obtenerEstudiantePorTelegramId = async (req, res) => {
+const obtenerEstudiantePorTelegramId = async (req, res) => {
     try {
-      const id_telegram = req.params.id_telegram;
-      const estudiante = await Estudiante.findOne({ id_telegram: id_telegram })
-        .populate('carrera', 'nombre_carrera'); // Popula el campo carrera y solo trae el nombre de la carrera
-  
-      if (!estudiante) {
-        return res.status(404).json({ message: 'No se encontró ningún estudiante con el id_telegram proporcionado.' });
-      }
-  
-      return res.json(estudiante);
+        const id_telegram = req.params.id_telegram;
+        const estudiante = await Estudiante.findOne({ id_telegram: id_telegram })
+            .populate('carrera', 'nombre_carrera'); // Popula el campo carrera y solo trae el nombre de la carrera
+
+        if (!estudiante) {
+            return res.status(404).json({ message: 'No se encontró ningún estudiante con el id_telegram proporcionado.' });
+        }
+
+        return res.json(estudiante);
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Error al obtener el estudiante.' });
+        console.error(error);
+        return res.status(500).json({ message: 'Error al obtener el estudiante.' });
     }
-  };
+};
 
 // Leer todos los estudiantes
 const obtenerEstudiantes = async (req, res) => {
@@ -116,8 +116,11 @@ const obtenerEstudiantePorId = async (req, res) => {
 
 // Actualizar un estudiante por su ID
 const actualizarEstudiante = async (req, res) => {
+    console.log(req.body);
     try {
-        const estudianteActualizado = await Estudiante.findByIdAndUpdate(req.query.id, req.body, { new: true });
+        const estudianteActualizado = await Estudiante.findByIdAndUpdate(req.query.id, {
+            activo: req.body.activo
+        }, { new: true });
         return res.status(200).json({
             mensaje: 'Estudiante actualizado exitosamente', estudiante: estudianteActualizado
         });
@@ -142,6 +145,18 @@ const borrarEstudiante = async (req, res) => {
     }
 };
 
+const servirEstudiantes = async (req, res) => {
+    const estudiantes = await Estudiante.find({
+        activo: 1
+    });
+    const estudiantesInactivos = await Estudiante.find({
+        activo: 0
+    });
+
+    return res.render('ver_estudiantes', { estudiantes, estudiantesInactivos});
+
+}
+
 // Exportar las funciones del controlador
 module.exports = {
     crearEstudiante,
@@ -151,5 +166,6 @@ module.exports = {
     obtenerEstudiantePorId,
     actualizarEstudiante,
     obtenerEstudiantePorTelegramId,
-    borrarEstudiante
+    borrarEstudiante,
+    servirEstudiantes,
 };

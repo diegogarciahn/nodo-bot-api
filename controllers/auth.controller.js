@@ -9,8 +9,6 @@ const login = async (req = request, res = response) => {
     const usuario = decode.split(':')[0];
     const password = decode.split(':')[1];
 
-    console.log(usuario);
-    console.log(password);
     try {
 
         const user = await Usuario.findOne({
@@ -32,11 +30,22 @@ const login = async (req = request, res = response) => {
         }
 
         const token = await generarJWT(user._id.valueOf());
-        
-        return res.status(200).json({
-            token: token,
-            usuario: user.nombre_usuario,
+
+        res.cookie('token', token, {
+            httpOnly: true,
+            maxAge: 60 * 60 * 24 * 7
         });
+
+        if (token) {
+            res.setHeader("Content-Type", "text/html");
+            return res.redirect('/aulas/crear');
+        }
+
+
+        // return res.status(200).json({
+        //     token: token,
+        //     usuario: user.nombre_usuario,
+        // });
 
     } catch (error) {
         console.log(error);
@@ -75,4 +84,8 @@ const getUser = async (req = request, res = response) => {
 
 }
 
-module.exports = { login, getUser };
+const loginView = async (req = request, res = response) => {
+    return res.render('login');
+}
+
+module.exports = { login, getUser, loginView };

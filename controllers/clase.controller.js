@@ -1,4 +1,5 @@
 const Clase = require('../models/clase.model'); // Importar el modelo de Clase
+const Carrera = require('../models/carrera.model'); // Importar el modelo de Clase
 
 // Crear una nueva clase
 const crearClase = async (req, res) => {
@@ -60,7 +61,7 @@ const obtenerClasePorId = async (req, res) => {
 // Actualizar una clase por su ID
 const actualizarClase = async (req, res) => {
     try {
-        const claseActualizada = await Clase.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const claseActualizada = await Clase.findByIdAndUpdate(req.params._id, req.body, { new: true });
         return res.status(200).json({
             mensaje: 'Clase actualizada exitosamente', clase: claseActualizada
         });
@@ -74,7 +75,7 @@ const actualizarClase = async (req, res) => {
 // Borrar una clase por su ID
 const borrarClase = async (req, res) => {
     try {
-        await Clase.findByIdAndDelete(req.params.id);
+        await Clase.findByIdAndDelete(req.params._id);
         return res.status(200).json({
             mensaje: 'Clase borrada exitosamente'
         });
@@ -85,11 +86,34 @@ const borrarClase = async (req, res) => {
     }
 };
 
+const servirclases = async (req = request, res = response) => {
+    const clases = await Clase.find();
+
+    console.log(clases);
+
+    return res.render('verclases', { clases });
+}
+
+const crearClaseView = async (req = request, res = response) => {
+    const carreras = await Carrera.find();
+    return res.render('crearclase', {carreras});
+}
+
+const updateClaseView = async (req = request, res = response) => {
+    const clase = await Clase.findById(req.params._id);
+    const carreras = await Carrera.find();
+
+    return res.render('updateclase', {clase, carreras});
+}
+
 // Exportar las funciones del controlador
 module.exports = {
     crearClase,
     obtenerClases,
     obtenerClasePorId,
     actualizarClase,
-    borrarClase
+    borrarClase,
+    servirclases,
+    crearClaseView,
+    updateClaseView
 };

@@ -1,4 +1,4 @@
-'Ruta: /api/aula';
+'Ruta: /api/aulas';
 const { Router } = require('express');
 const { validarJWT } = require('../middlewares/validarJWT.middleware');
 const { check } = require('express-validator');
@@ -7,7 +7,6 @@ const { createAula, getAllAulas, getAulaById, updateAulaById, deleteAulaById } =
 const router = Router();
 
 router.post('/', [
-    validarJWT,
     check('numero', 'El numero de aula es obligatorio.').notEmpty(),
     check('numero', 'El numero de aula es texto.').isString(),
     validarCampos
@@ -19,20 +18,16 @@ router.get('/', [
 
 router.get('/buscar', [
     validarJWT,
-    
+
 ], getAulaById);
 
-router.put('/', [
-    validarJWT,
+router.put('/:_id', [
     check('numero', 'El numero de aula es obligatorio.').notEmpty(),
     check('numero', 'El numero de aula es texto.').isString(),
     validarCampos
-    
+
 ], updateAulaById);
 
-router.delete('/', [
-    validarJWT,
-    
-], deleteAulaById);
+router.delete('/:_id', deleteAulaById);
 
 module.exports = router;

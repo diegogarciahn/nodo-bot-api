@@ -14,6 +14,14 @@ const EstudianteSchema = new mongoose.Schema({
         required: true,
         autopopulate: true
     },
+    horario: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Horario',
+            required: true,
+            autopopulate: true
+        }
+    ],
     telefono: { type: String },
     id_telegram: { type: String },
     horario_solicitado: [{ type: mongoose.Schema.Types.ObjectId,
@@ -22,7 +30,7 @@ const EstudianteSchema = new mongoose.Schema({
         autopopulate: true }],
 },{
     collection: 'estudiante',
-    timestamp:true
+    timestamp: false
 });
 
 // Crear y exportar el modelo
