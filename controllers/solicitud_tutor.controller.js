@@ -1,3 +1,4 @@
+const Estudiante = require('../models/estudiante.model');
 const SolicitudTutor = require('../models/solicitud_tutor.model');
 
 const crearSolicitudTutor = async (req, res) => {
@@ -76,6 +77,11 @@ const obtenerSolicitudesTutores = async (req, res) => {
       if (!req.body.estado || !req.body.feedback) {
         return res.status(400).json({ error: 'Los campos estado y feedback son obligatorios'});
       }
+
+      const tutor = 0;
+      if (req.body.estado == "Aprobado") {
+        tutor = 1;
+      }
       
       const solicitudTutorActualizada = await SolicitudTutor.findByIdAndUpdate(
         id,
@@ -87,11 +93,25 @@ const obtenerSolicitudesTutores = async (req, res) => {
         { new: true }
       );
       
+      const estudiante = await Estudiante.findByIdAndUpdate(req.body.idEstudiante,
+        {
+          horario: solicitudTutorActualizada.horario_solicitado,
+          tutor: tutor,
+        },
+        { new: true}
+        );
+
       if (!solicitudTutorActualizada) {
         return res.status(404).json({ error: 'Solicitud de tutor no encontrada' });
       }
+
+      if (!estudiante) {
+        return res.status(404).json({ error: 'Estudiante no encontrado' });
+      }
       
-      res.json(solicitudTutorActualizada);
+      res.status(200).json({
+        solicitudTutorActualizada
+      });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -109,6 +129,15 @@ const obtenerSolicitudesTutores = async (req, res) => {
       res.status(500).json({ error: error.message });
     }
   };
+
+
+  const solicitudesTutorView = async (req, res) => {
+    const solicitudes = await SolicitudTutor.find({
+      estado: '0'
+    }).populate('estudiante').populate('clase').populate('horario_solicitado');
+
+    return res.render('versolicitudes_tutor', {solicitudes});
+  };
   
   module.exports = {
     crearSolicitudTutor,
@@ -118,4 +147,5 @@ const obtenerSolicitudesTutores = async (req, res) => {
     obtenerSolicitudesPorEstudiante,
     actualizarSolicitudTutor,
     eliminarSolicitudTutor,
+    solicitudesTutorView
   };

@@ -142,16 +142,11 @@ const borrarEstudiante = async (req, res) => {
 };
 
 const servirEstudiantes = async (req, res) => {
-    try {
-        const estudiantes = await Estudiante.find({
-            activo: 1
-        });
-        return res.render('verclases');
-    } catch (error) {
-        return res.status(500).json({
-            mensaje: 'Error al obtener los estudiantes', error: error.message
-        });
-    }
+    const estudiantes = await Estudiante.find();
+
+    console.log(estudiantes);
+    return res.render('ver_estudiantes', { estudiantes});
+
 }
 
 // Exportar las funciones del controlador

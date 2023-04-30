@@ -23,20 +23,32 @@ const crearHorario = async (req, res) => {
 };
 
 const actualizarHorario = async (req, res) => {
+  const id = req.params._id;
+  const idSinEspacios = id.trim();
   try {
-    const horarioActualizado = await Horario.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.status(200).json({ mensaje: 'Permiso actualizado con exito', horario: horarioActualizado});
+    const horario = await Horario.findByIdAndUpdate(idSinEspacios, req.body, { new: true });
+    if(!horario){
+      return res.status(404).json({ message: 'hoario no encontrado'});
+    }
+    return res.status(200).json({ mensaje: 'Horario actualizado con exito', horario});
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al actualizar el horario ', error: error.message });
+    console.error(error);
+    return res.status(500).json({ mensaje: 'Error al actualizar el horario '});
   }
 };
 
-const eliminarHorario = async (req, res) => {
+const eliminarHorario = async (req = request, res) => {
+  const id = req.params._id;
+  const idSinEspacios = id.trim();
   try {
-    await Horario.findByIdAndDelete(req.params.id);
-    res.status(200).json({ mensaje: 'Horario borrado exitosamente' });
+    const horario = await Horario.findByIdAndDelete(idSinEspacios);
+    if (!horario){
+      return res.status(404).json({message: 'Horario no encontrado'});
+    }
+    return res.status(200).json({ mensaje: 'Horario borrado exitosament', horario });
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al eliminar el horario ', error: error.message });
+    console.error(error);
+    return res.status(500).json({ mensaje: 'Error al eliminar el horario ', error: error.message });
   }
 };
 
@@ -48,11 +60,18 @@ const servirHorarios = async (req = request, res = response) => {
 const crearHorarioView = async (req = request, res = response) => {
   return res.render('crear_horario');
 }
+
+const updateHorarioView = async (req = request, res = response) => {
+  const horario = await Horario.findById(req.params._id);
+
+  return res.render('update_horario', { horario });
+}
 module.exports = {
   servirHorarios,
   crearHorarioView,
   obtenerHorarios,
   crearHorario,
   actualizarHorario,
-  eliminarHorario
+  eliminarHorario,
+  updateHorarioView
 };
