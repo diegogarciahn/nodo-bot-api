@@ -27,6 +27,8 @@ class Server {
         this.rutaPaginaClases = '/clases';
         this.rutaPaginaAulas = '/aulas';
         this.rutaPaginaHorario = '/horarios';
+        this.rutaPaginaEstudiantes = '/estudiantes';
+        this.rutaPaginaSolicitudTutor = '/solicitud_tutor';
 
         // Midlewares: funciones que siempre se van a ejecutar cuando iniciamos un servidor
         this.middlewares();
@@ -71,6 +73,8 @@ class Server {
         this.app.use(this.rutaPaginaClases, require('../routes/clase_views.routes'));
         this.app.use(this.rutaPaginaAulas, require('../routes/aulas_views.routes'));
         this.app.use(this.rutaPaginaHorario, require('../routes/horario_views.routes'));
+        this.app.use(this.rutaPaginaEstudiantes, require('../routes/estudiante_views.routes'));
+        this.app.use(this.rutaPaginaSolicitudTutor, require('../routes/solicitud_tutor_views.routes'));
     }
 
     listen() {
