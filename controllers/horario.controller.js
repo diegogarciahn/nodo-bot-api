@@ -1,9 +1,11 @@
 const Horario = require('../models/horario.models');
+const { request, response } = require('express');
 
 const obtenerHorarios = async (req, res) => {
   try {
     const horarios = await Horario.find();
     res.status(200).json(horarios);
+    //return res.render('ver_horarios', {horarios});
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ mensaje: 'Error al obtener los horarios', error: error.message });
@@ -38,7 +40,17 @@ const eliminarHorario = async (req, res) => {
   }
 };
 
+const servirHorarios = async (req = request, res = response) => {
+  const horarios = await Horario.find();
+  res.render('ver_horarios', {horarios})
+};
+
+const crearHorarioView = async (req = request, res = response) => {
+  return res.render('crear_horario');
+}
 module.exports = {
+  servirHorarios,
+  crearHorarioView,
   obtenerHorarios,
   crearHorario,
   actualizarHorario,
