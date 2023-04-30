@@ -38,9 +38,14 @@ const actualizarHorario = async (req, res) => {
 };
 
 const eliminarHorario = async (req = request, res) => {
+  const id = req.params._id;
+  const idSinEspacios = id.trim();
   try {
-    await Horario.findByIdAndDelete(req.params._id);
-    return res.status(200).json({ mensaje: 'Horario borrado exitosamente' });
+    const horario = await Horario.findByIdAndDelete(idSinEspacios);
+    if (!horario){
+      return res.status(404).json({message: 'Horario no encontrado'});
+    }
+    return res.status(200).json({ mensaje: 'Horario borrado exitosament', horario });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ mensaje: 'Error al eliminar el horario ', error: error.message });

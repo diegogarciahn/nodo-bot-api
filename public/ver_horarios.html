@@ -56,8 +56,8 @@
                                 <a href="https://localhost:8080/horarios/actualizar/<%= horario._id %>">
                                     <button class="btn btn-primary">Actualizar</button>
                                 </a>
-                                <button class="btn btn-danger">Eliminar</button>
-                                </button>
+                                <button data-id="<%= horario._id %>" data-dia="<%= horario.dia %>" data-hora="<%= horario.hora %>" class="btn btn-danger btn-eliminar">Eliminar</button>
+
                             </td>
                         </tr>
 
@@ -66,6 +66,66 @@
             </table>
         </div>
     </div>
+    <div id="modal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="border-radius: 15px;">
+                <div class="modal-header">
+                    <h2>Eliminar Horario</h2>
+                </div>
+                <div class="modal-body">
+                    <p id="horario-eliminar" data-id=""></p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button id="ok" type="button" class="btn btn-primary">Aceptar</button>
+                    <button id="cancel" type="button" class="btn btn-secondary">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+<script>
+    $(document).ready(function () {
 
+        $('.table').DataTable({
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
+            },
+        });
+
+        $('.btn-eliminar').on('click', function () {
+            var id = $(this).attr('data-id');
+            var dia = $(this).attr('data-dia');
+            var hora = $(this).attr('data-hora')
+            console.log(id);
+            //console.log(dia);
+            $('#horario-eliminar').attr('data-id', id);
+            $('#horario-eliminar').text('¿Estás seguro de eliminar el horario: ' + dia + ', ' + hora + '?');
+            $('#modal').show();
+        });
+
+        $('#ok').on('click', function () {
+            var id = $('#horario-eliminar').attr('data-id');
+            console.log(id);
+            const options = {
+                method: 'delete',
+                url: 'https://localhost:8080/api/horario/eliminarHorario/' + id,
+            }
+
+            axios
+                .request(options)
+                .then(function (response) {
+                    alert('Eliminación exitosa');
+                    location.reload();
+                })
+                .catch(function (error) {
+                    alert(error);
+                    console.log(error);
+                });
+        });
+
+        $('#cancel').on('click', function () {
+            $('#modal').hide();
+        });
+    });
+</script>
 </html>
