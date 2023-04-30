@@ -6,7 +6,7 @@ const { crearHorario, obtenerHorarios, actualizarHorario, eliminarHorario  } = r
 
 router.post('/crearHorarios', crearHorario); 
 router.get('/obtenerHorarios', obtenerHorarios); // Ruta para obtener todos los horario
-router.put('/actualizarHorario/:id', actualizarHorario); // Ruta para actualizar un horario por su ID
-router.delete('/eliminarHorario/:id', eliminarHorario); // Ruta para borrar un horario por su ID
+router.put('/actualizarHorario/:_id', actualizarHorario); // Ruta para actualizar un horario por su ID
+router.delete('/eliminarHorario/:_id', eliminarHorario); // Ruta para borrar un horario por su ID
 
 module.exports = router;
