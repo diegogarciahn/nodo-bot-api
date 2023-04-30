@@ -50,14 +50,14 @@
             <div class="form-group my-2">
               <div class="container">
                 <label for="dia">Dia:</label>
-                <select class="form-control">
-                  <option>Lunes</option>
-                  <option>Martes</option>
-                  <option>Miércoles</option>
-                  <option>Jueves</option>
-                  <option>Viernes</option>
-                  <option>Sábado</option>
-                  <option>Domingo</option>
+                <select id="dia" class="form-control">
+                  <option value="Lunes">Lunes</option>
+                  <option value="Martes">Martes</option>
+                  <option value="Miercoles">Miércoles</option>
+                  <option value="Jueves">Jueves</option>
+                  <option value="Viernes">Viernes</option>
+                  <option value="Sabado">Sábado</option>
+                  <option value="Domingo">Domingo</option>
                 </select>
               </div>
               <div class="container">
@@ -65,7 +65,7 @@
                 <input
                   type="time"
                   class="form-control"
-                  id="numero_aula"
+                  id="hora"
                   required
                 />
               </div>
@@ -83,4 +83,44 @@
       </div>
     </div>
   </body>
+  <script>
+    $(document).ready(function () {
+
+        $('.table').DataTable({
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
+            },
+        });
+
+        $('#enviar').on('click', function () {
+            enviarForm();
+        });
+
+        function enviarForm() {
+            var dia = $('#dia').val();
+            var hora = $('#hora').val();
+
+            const options = {
+                method: 'POST',
+                url: 'https://localhost:8080/api/horario/crearHorarios',
+                data: {
+                    "dia": dia,
+                    "hora": hora
+                }
+            }
+
+            axios
+                .request(options)
+                .then(function (response) {
+                    alert('Creación exitosa');
+                    location.reload();
+                })
+                .catch(function (error) {
+                    alert('Ocurrió un error al crear el horario, por favor vuelva a intentarlo');
+                    console.log(error);
+                });
+
+        }
+    });
+</script>
 </html>
