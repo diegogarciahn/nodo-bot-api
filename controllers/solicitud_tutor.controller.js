@@ -78,7 +78,7 @@ const obtenerSolicitudesTutores = async (req, res) => {
         return res.status(400).json({ error: 'Los campos estado y feedback son obligatorios'});
       }
 
-      const tutor = 0;
+      var tutor = 0;
       if (req.body.estado == "Aprobado") {
         tutor = 1;
       }

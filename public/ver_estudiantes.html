@@ -18,73 +18,139 @@
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <title>Estudiante</title>
+
 </head>
 
 <body>
     <%- include('partials/nav_bar.ejs', {activeItem: 5}) %>
     <div class="row my-2">
-        <div class="col-md-10"></div>
+        <div class="col-md-1"></div>
+        <div class="col-md-9">
+            <h2>Estudiantes</h2>
+        </div>
         <div class="col-md-2">
-            <a href="https://localhost:8080/estudiantes/crear"><button class="btn btn-success">Registrar estudiante</button></a>
+            <a href="https://localhost:8080/estudiantes/crear"><button class="btn btn-success">Registrar
+                    estudiante</button></a>
         </div>
     </div>
+
     <div class="row my-2">
         <div class="col-md-1"></div>
         <div class="col-md-10">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Número de Cuenta</th>
-                        <th>Nombre</th>
-                        <th>Carrera</th>
-                        <th>Activo</th>
-                        <th>Opciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% estudiantes.forEach((estudiante)=> { %>
-                        <tr>
-                            <td>
-                                <%= estudiante.numero_cuenta %>
-                            </td>
-                            <td>
-                                <%= estudiante.nombre %>
-                            </td>
-                            <td>
-                                <%= estudiante.carrera.nombre_carrera %>
-                            </td>
-                            <td>
-                                <%= estudiante.activo %>
-                            </td>
-                            <td>
-                                <a href="https://localhost:8080/estudiantes/actualizar/<%= estudiante._id %>"><button
-                                        class="btn btn-primary">Actualizar</button></a>
-                                <button data-id="<%= estudiante._id %>" data-name="<%= estudiante.nombre %>"
-                                    class="btn btn-danger btn-eliminar">Eliminar</button>
-                            </td>
-                        </tr>
-                        <% }) %>
-                </tbody>
-            </table>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
+                        type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Activos</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
+                        type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Inactivos</button>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
+                    tabindex="0">
+                    <table class="table my-5">
+                        <thead>
+                            <tr>
+                                <th>Número de Cuenta</th>
+                                <th>Nombre</th>
+                                <th>Carrera</th>
+                                <th>Tutor</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% estudiantes.forEach((estudiante)=> { %>
+                                <tr>
+                                    <td>
+                                        <%= estudiante.numero_cuenta %>
+                                    </td>
+                                    <td>
+                                        <%= estudiante.nombre %>
+                                    </td>
+                                    <td>
+                                        <%= estudiante.carrera.nombre_carrera %>
+                                    </td>
+                                    <td>
+                                        <% if (estudiante.tutor==1) { %>
+                                            <p>Sí</p>
+                                            <% } else { %>
+                                                <p>No</p>
+                                                <% } %>
+                                    </td>
+                                    <td>
+                                        <button data-id="<%= estudiante._id %>" data-name="<%= estudiante.nombre %>"
+                                            class="btn btn-danger btn-desactivar">Desactivar</button>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
+                    tabindex="0">
+                    <table class="table my-5">
+                        <thead>
+                            <tr>
+                                <th>Número de Cuenta</th>
+                                <th>Nombre</th>
+                                <th>Carrera</th>
+                                <th>Tutor</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% estudiantesInactivos.forEach((estudiante)=> { %>
+                                <tr>
+                                    <td>
+                                        <%= estudiante.numero_cuenta %>
+                                    </td>
+                                    <td>
+                                        <%= estudiante.nombre %>
+                                    </td>
+                                    <td>
+                                        <%= estudiante.carrera.nombre_carrera %>
+                                    </td>
+                                    <td>
+                                        <% if (estudiante.tutor==1) { %>
+                                            <p>Sí</p>
+                                            <% } else { %>
+                                                <p>No</p>
+                                                <% } %>
+                                    </td>
+                                    <td>
+                                        <button data-id="<%= estudiante._id %>" data-name="<%= estudiante.nombre %>"
+                                            class="btn btn-primary btn-activar">Activar</button>
+                                        <button data-id="<%= estudiante._id %>" data-name="<%= estudiante.nombre %>"
+                                            class="btn btn-danger btn-eliminar">Eliminar</button>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
         </div>
     </div>
     <div id="modal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content" style="border-radius: 15px;">
                 <div class="modal-header">
-                    <h2>Eliminar Aula</h2>
+                    <h2 id="titulo-estudiante"></h2>
                 </div>
                 <div class="modal-body">
-                    <p id="aula-eliminar" data-id=""></p>
+                    <p id="estudiante" data-id=""></p>
                 </div>
                 <div class="modal-footer justify-content-center">
-                    <button id="ok" type="button" class="btn btn-primary">Aceptar</button>
+                    <button id="ok" type="button" data-action="" class="btn btn-primary">Aceptar</button>
                     <button id="cancel" type="button" class="btn btn-secondary">Cancelar</button>
                 </div>
             </div>
         </div>
     </div>
-
 </body>
 <script>
     $(document).ready(function () {
@@ -95,31 +161,77 @@
             },
         });
 
+        $('.btn-desactivar').on('click', function () {
+            var id = $(this).attr('data-id');
+            var nombre = $(this).attr('data-name');
+            $('#titulo-estudiante').text('Desactivar Estudiante');
+            $('#estudiante').attr('data-id', id);
+            $('#estudiante').text('¿Estás seguro de eliminar el estudiante "' + nombre + '"?');
+            $('#ok').attr('data-action', 'Desactivar');
+            $('#modal').show();
+        });
+        
         $('.btn-eliminar').on('click', function () {
             var id = $(this).attr('data-id');
             var nombre = $(this).attr('data-name');
-            $('#aula-eliminar').attr('data-id', id);
-            $('#aula-eliminar').text('¿Estás seguro de eliminar el aula "' + nombre + '"?');
+            $('#titulo-estudiante').text('Eliminar Estudiante');
+            $('#estudiante').attr('data-id', id);
+            $('#estudiante').text('¿Estás seguro de eliminar el estudiante "' + nombre + '"?');
+            $('#ok').attr('data-action', 'Eliminar');
+            $('#modal').show();
+        });
+
+        $('.btn-activar').on('click', function () {
+            var id = $(this).attr('data-id');
+            var nombre = $(this).attr('data-name');
+            $('#titulo-estudiante').text('Activar Estudiante');
+            $('#estudiante').attr('data-id', id);
+            $('#estudiante').text('¿Estás seguro de activar el estudiante "' + nombre + '"?');
+            $('#ok').attr('data-action', 'Activar');
             $('#modal').show();
         });
 
         $('#ok').on('click', function () {
-            var id = $('#aula-eliminar').attr('data-id');
+            var id = $('#estudiante').attr('data-id');
+            var accion = $('#ok').attr('data-action');
+            var url = "";
+            var method = "";
+            var activo;
             console.log(id);
+
+            if (accion == "Desactivar") {
+                url =  `https://localhost:8080/api/estudiantes/?id=${id}`;
+                method = "put";
+                activo = 0;
+            } else if(accion == "Eliminar") {
+                url =  `https://localhost:8080/api/estudiantes/?id=${id}`;
+                method = "delete";
+
+            } else {
+                url =  `https://localhost:8080/api/estudiantes/?id=${id}`;
+                method = "put";
+                activo = 1;
+            }
+
+            console.log(url);
+            console.log(method);
+
             const options = {
-                method: 'delete',
-                url: 'https://localhost:8080/api/aulas/' + id,
+                method: method,
+                url: url,
+                data: {
+                    "activo": activo
+                }
             }
 
             axios
                 .request(options)
                 .then(function (response) {
-                    alert('Eliminación exitosa');
+                    alert('Actualizado con éxito');
                     location.reload();
                 })
                 .catch(function (error) {
                     alert(error);
-                    console.log(error);
                 });
         });
 
