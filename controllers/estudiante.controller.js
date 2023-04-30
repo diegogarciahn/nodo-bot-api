@@ -115,8 +115,11 @@ const obtenerEstudiantePorId = async (req, res) => {
 
 // Actualizar un estudiante por su ID
 const actualizarEstudiante = async (req, res) => {
+    console.log(req.body);
     try {
-        const estudianteActualizado = await Estudiante.findByIdAndUpdate(req.query.id, req.body, { new: true });
+        const estudianteActualizado = await Estudiante.findByIdAndUpdate(req.query.id, {
+            activo: req.body.activo
+        }, { new: true });
         return res.status(200).json({
             mensaje: 'Estudiante actualizado exitosamente', estudiante: estudianteActualizado
         });
@@ -142,10 +145,14 @@ const borrarEstudiante = async (req, res) => {
 };
 
 const servirEstudiantes = async (req, res) => {
-    const estudiantes = await Estudiante.find();
+    const estudiantes = await Estudiante.find({
+        activo: 1
+    });
+    const estudiantesInactivos = await Estudiante.find({
+        activo: 0
+    });
 
-    console.log(estudiantes);
-    return res.render('ver_estudiantes', { estudiantes});
+    return res.render('ver_estudiantes', { estudiantes, estudiantesInactivos});
 
 }
 
@@ -159,5 +166,5 @@ module.exports = {
     actualizarEstudiante,
     obtenerEstudiantePorTelegramId,
     borrarEstudiante,
-    servirEstudiantes
+    servirEstudiantes,
 };
