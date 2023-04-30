@@ -2,7 +2,9 @@ const Aula = require('../models/aula.model');
 const { request, response } = require('express');
 
 // Crear nueva aula
-const createAula = async (req, res) => {
+const createAula = async (req = request, res) => {
+
+    console.log('hola', req.headers);
     try {
         const aula = new Aula(req.body);
         await aula.save();

@@ -4,6 +4,7 @@ const { dbConnection } = require('../database/config').dbConnection();
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 
 class Server {
 
@@ -27,6 +28,7 @@ class Server {
         this.rutaPaginaClases = '/clases';
         this.rutaPaginaAulas = '/aulas';
         this.rutaPaginaHorario = '/horarios';
+        this.rutaLogin = '/login';
 
         // Midlewares: funciones que siempre se van a ejecutar cuando iniciamos un servidor
         this.middlewares();
@@ -36,6 +38,9 @@ class Server {
     }
 
     middlewares() {
+
+        // Cookie parser
+        this.app.use(cookieParser());
 
         // CORS
         this.app.use(cors())
@@ -71,6 +76,7 @@ class Server {
         this.app.use(this.rutaPaginaClases, require('../routes/clase_views.routes'));
         this.app.use(this.rutaPaginaAulas, require('../routes/aulas_views.routes'));
         this.app.use(this.rutaPaginaHorario, require('../routes/horario_views.routes'));
+        this.app.use(this.rutaLogin, require('../routes/auth_views.routes'));
     }
 
     listen() {

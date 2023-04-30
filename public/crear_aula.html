@@ -17,35 +17,46 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <title>Document</title>
+    <title>Crear aula</title>
 </head>
 
 <body>
-    <div class="container my-5" style="border: 1px solid black; width: 60%; height: 500px; border-radius: 15px;">
+    <%- include('partials/nav_bar.ejs', {activeItem: 2}) %>
+        <div class="container my-5" style="border: 1px solid black; width: 60%; height: 500px; border-radius: 15px;">
 
-        <div class="row justify-content-center">
-            <div class="col-md-2 col-2"></div>
-            <div class="col-md-8 col-8  my-5">
-                <form class="form">
-                    <h2>Crear aula</h2>
-                    <div class="form-group my-2">
-                        <label for="nombre_clase">Número de aula:</label>
-                        <input type="text" class="form-control" id="numero_aula" placeholder="101" required>
-                    </div>
-                    <div class="row justify-content-center my-5">
-                        <div class="col-md-3">
-                            <button type="button" id="enviar" class="btn btn-primary"><b>
-                                    Enviar</b></button>
+            <div class="row justify-content-center">
+                <div class="col-md-2 col-2"></div>
+                <div class="col-md-8 col-8  my-5">
+                    <form class="form">
+                        <h2>Crear aula</h2>
+                        <div class="form-group my-2">
+                            <label for="nombre_clase">Número de aula:</label>
+                            <input type="text" class="form-control" id="numero_aula" placeholder="101" required>
                         </div>
-                    </div>
-                </form>
+                        <div class="row justify-content-center my-5">
+                            <div class="col-md-3">
+                                <button type="button" id="enviar" class="btn btn-primary"><b>
+                                        Enviar</b></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-2 col-2"></div>
             </div>
-            <div class="col-md-2 col-2"></div>
         </div>
-    </div>
 </body>
 <script>
     $(document).ready(function () {
+        
+        const todasLasCookies = document.cookie;
+        // Parsear las cookies en un objeto
+        // var cookies = todasLasCookies.split('; ').reduce(function (obj, cookie) {
+        //     var keyValue = cookie.split('=');
+        //     obj[keyValue[0]] = keyValue[1];
+        //     return obj;
+        // }, {});
+    
+        console.log('Cookies: ', todasLasCookies.length);
 
         $('.table').DataTable({
             language: {
@@ -61,6 +72,9 @@
             var numero_aula = $('#numero_aula').val();
             var codigo_clase = $('#codigo_clase').val();
 
+
+
+
             const options = {
                 method: 'POST',
                 url: 'https://localhost:8080/api/aulas/',
@@ -68,6 +82,7 @@
                     "numero": numero_aula
                 }
             }
+
 
             axios
                 .request(options)

@@ -6,8 +6,6 @@ const generarJWT = (uid = '') => {
 
         const payload = { uid };
 
-        console.log(uid);
-
         jwt.sign(payload, process.env.API_KEY, {
             expiresIn: "86400000"
         }, (err, token) => {
