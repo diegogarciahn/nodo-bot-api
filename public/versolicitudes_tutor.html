@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <title>Clases</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Clases</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Aula</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled">Disabled</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="row my-2">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-9">
+            <h2>Solicitudes para ser Tutor</h2>
+        </div>
+        <div class="col-md-2">
+        </div>
+    </div>
+    <div class="row my-2">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Estudiante</th>
+                        <th>Fecha</th>
+                        <th class="">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% solicitudes.forEach((solicitud)=> { %>
+                        <tr>
+                            <td>
+                                <%= solicitud.estudiante.nombre %>
+                                    <br>
+                                    <%= solicitud.estudiante.carrera.nombre_carrera %>
+                                        <br>
+                                        <%= solicitud.estudiante.numero_cuenta %>
+                                            <br>
+                                            <%= solicitud.estudiante.telefono %>
+
+                            </td>
+                            <td>
+                                <%= solicitud.fecha_hora %>
+                            </td>
+                            <td>
+                                <button data-id="<%= solicitud._id %>" data-estudiante="<%= solicitud.estudiante.nombre %>" class="btn btn-primary btn-aceptar">Aceptar</button>
+                                <button data-id="<%= solicitud._id %>" data-estudiante="<%= solicitud.estudiante.nombre %>" class="btn btn-danger btn-eliminar">Denegar</button>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="modal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="border-radius: 15px;">
+                <div class="modal-header">
+                    <h2 id="titulo-solicitud"></h2>
+                </div>
+                <div class="modal-body">
+                    <label for="estudiante">Estudiante</label>
+                    <input class="form-control" id="estudiante" data-id="" type="text" value="" readonly>
+                    <label for="feedback">Feedback</label>
+                    <textarea class="form-control" name="feedback" id="" cols="30" rows="10"></textarea>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button id="ok" type="button" class="btn btn-primary">Enviar</button>
+                    <button id="cancel" type="button" class="btn btn-secondary">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    $(document).ready(function () {
+
+        $('.table').DataTable({
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
+            },
+        });
+
+        $('.btn-aceptar').on('click', function () {
+            var id = $(this).attr('data-id');
+            var nombre = $(this).attr('data-estudiante');
+            $('#titulo-solicitud').text('Aceptar Solicitud');
+            $('#estudiante').val(nombre);
+            $('#estudiante').attr('data-id', id);
+            $('#modal').show();
+        });
+
+        $('.btn-eliminar').on('click', function () {
+            var id = $(this).attr('data-id');
+            var nombre = $(this).attr('data-estudiante');
+            $('#titulo-solicitud').text('Eliminar Solicitud');
+            $('#estudiante').val(nombre);
+            $('#estudiante').attr('data-id', id);
+            $('#modal').show();
+        });
+
+        $('#ok').on('click', function () {
+            var id = $('#estudiante').attr('data-id');
+            console.log(id);
+            const options = {
+                method: 'delete',
+                url: 'https://localhost:8080/api/solicitud_tutor/' + id,
+            }
+
+            axios
+                .request(options)
+                .then(function (response) {
+                    alert('Eliminación exitosa');
+                    location.reload();
+                })
+                .catch(function (error) {
+                    alert(error);
+                    console.log(error);
+                });
+        });
+
+        $('#cancel').on('click', function () {
+            $('#modal').hide();
+        });
+    });
+</script>
+
+</html>

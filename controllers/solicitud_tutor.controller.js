@@ -1,3 +1,4 @@
+const Estudiante = require('../models/estudiante.model');
 const SolicitudTutor = require('../models/solicitud_tutor.model');
 
 const crearSolicitudTutor = async (req, res) => {
@@ -87,11 +88,18 @@ const obtenerSolicitudesTutores = async (req, res) => {
         { new: true }
       );
       
+      const estudiante = await Estudiante.findByIdAndUpdate(req.body.idEstudiante,
+        {
+          horario: solicitudTutorActualizada.horario_solicitado,
+          tutor: 1,
+        }
+        )
+
       if (!solicitudTutorActualizada) {
         return res.status(404).json({ error: 'Solicitud de tutor no encontrada' });
       }
       
-      res.json(solicitudTutorActualizada);
+      res.json(solicitudTutorActualizada, estudiante);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -109,6 +117,13 @@ const obtenerSolicitudesTutores = async (req, res) => {
       res.status(500).json({ error: error.message });
     }
   };
+
+
+  const solicitudesTutorView = async (req, res) => {
+    const solicitudes = await SolicitudTutor.find().populate('estudiante').populate('clase').populate('horario_solicitado');
+
+    return res.render('versolicitudes_tutor', {solicitudes});
+  };
   
   module.exports = {
     crearSolicitudTutor,
@@ -118,4 +133,5 @@ const obtenerSolicitudesTutores = async (req, res) => {
     obtenerSolicitudesPorEstudiante,
     actualizarSolicitudTutor,
     eliminarSolicitudTutor,
+    solicitudesTutorView
   };
