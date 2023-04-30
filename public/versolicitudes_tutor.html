@@ -18,7 +18,7 @@
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-    <title>Clases</title>
+    <title>Solicitudes de Tutores</title>
 </head>
 
 <body>
@@ -85,8 +85,8 @@
                                 <%= solicitud.fecha_hora %>
                             </td>
                             <td>
-                                <button data-id="<%= solicitud._id %>" data-estudiante="<%= solicitud.estudiante.nombre %>" class="btn btn-primary btn-aceptar">Aceptar</button>
-                                <button data-id="<%= solicitud._id %>" data-estudiante="<%= solicitud.estudiante.nombre %>" class="btn btn-danger btn-eliminar">Denegar</button>
+                                <button data-id="<%= solicitud._id %>" data-estudiante="<%= solicitud.estudiante.nombre %>" data-id-estudiante="<%= solicitud.estudiante._id %>" class="btn btn-primary btn-aceptar">Aceptar</button>
+                                <button data-id="<%= solicitud._id %>" data-estudiante="<%= solicitud.estudiante.nombre %>" data-id-estudiante="<%= solicitud.estudiante._id %>" class="btn btn-danger btn-eliminar">Denegar</button>
                             </td>
                         </tr>
                         <% }) %>
@@ -105,10 +105,10 @@
                     <label for="estudiante">Estudiante</label>
                     <input class="form-control" id="estudiante" data-id="" type="text" value="" readonly>
                     <label for="feedback">Feedback</label>
-                    <textarea class="form-control" name="feedback" id="" cols="30" rows="10"></textarea>
+                    <textarea class="form-control" name="feedback" id="feedback" cols="30" rows="10"></textarea>
                 </div>
                 <div class="modal-footer justify-content-center">
-                    <button id="ok" type="button" class="btn btn-primary">Enviar</button>
+                    <button id="ok" type="button" data-accion="" data-id-soli="" class="btn btn-primary">Enviar</button>
                     <button id="cancel" type="button" class="btn btn-secondary">Cancelar</button>
                 </div>
             </div>
@@ -127,33 +127,49 @@
         $('.btn-aceptar').on('click', function () {
             var id = $(this).attr('data-id');
             var nombre = $(this).attr('data-estudiante');
+            var idEstudiante = $(this).attr('data-id-estudiante');
             $('#titulo-solicitud').text('Aceptar Solicitud');
             $('#estudiante').val(nombre);
-            $('#estudiante').attr('data-id', id);
+            $('#estudiante').attr('data-id', idEstudiante);
+            $('#ok').attr('data-accion', 'Aprobado');
+            $('#ok').attr('data-id-soli', id);
             $('#modal').show();
         });
 
         $('.btn-eliminar').on('click', function () {
             var id = $(this).attr('data-id');
             var nombre = $(this).attr('data-estudiante');
+            var idEstudiante = $(this).attr('data-id-estudiante');
             $('#titulo-solicitud').text('Eliminar Solicitud');
             $('#estudiante').val(nombre);
-            $('#estudiante').attr('data-id', id);
+            $('#estudiante').attr('data-id', idEstudiante);
+            $('#ok').attr('data-accion', 'Rechazado');
+            $('#ok').attr('data-id-soli', id);
             $('#modal').show();
         });
 
         $('#ok').on('click', function () {
-            var id = $('#estudiante').attr('data-id');
+            var estado = $(this).attr('data-accion')
+            var id = $('#ok').attr('data-id-soli');
+            var idEstudiante = $('#estudiante').attr('data-id');
+            var feedback = $('#feedback').val();
             console.log(id);
+            console.log(idEstudiante);
+
             const options = {
-                method: 'delete',
-                url: 'https://localhost:8080/api/solicitud_tutor/' + id,
+                method: 'put',
+                url: 'https://localhost:8080/api/solicitud_tutor/actualizarSolicitudTutor/' + id,
+                data: {
+                    estado: estado,
+                    feedback: feedback,
+                    idEstudiante: idEstudiante,
+                }
             }
 
             axios
                 .request(options)
                 .then(function (response) {
-                    alert('Eliminación exitosa');
+                    alert('Cambio exitoso');
                     location.reload();
                 })
                 .catch(function (error) {
