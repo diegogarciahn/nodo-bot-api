@@ -11,8 +11,11 @@ const ClaseSchema = new mongoose.Schema({
         autopopulate: true
     }
 },{
-    collection: 'clase'
+    collection: 'clase',
+    timestamp: false
 });
+
+ClaseSchema.plugin(require('mongoose-autopopulate'));
 
 // Crear y exportar el modelo
 const Clase = mongoose.model('Clase', ClaseSchema);
