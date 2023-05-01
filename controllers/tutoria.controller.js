@@ -8,10 +8,13 @@ const getTutoriasEstudianteTutor = async (req, res, next) => {
         const id_telegram = req.params.id_telegram;
         const estud = await Estudiante.findOne({ id_telegram: id_telegram.trim() });
         if(!estud) {
-            return res.status(404).json({ message: 'No se encontró ningún estudiante con el id_telegram proporcionado.' });
+            return res.status(401).json({ message: 'No se encontró ningún estudiante con el id_telegram proporcionado.' });
         }
         const idTutor =  estud._id.valueOf();
         const tutorias = await Tutoria.find().populate('aula', 'solicitud_tutoria');
+        if(!tutorias) {
+            return res.status(404).json({ message: 'Usted es un estudiante por lo tanto no ah impartido una tutoria' });
+        }
         const tutoriasAgrupadas = {};
         tutorias.forEach(tutoria => {
             const tutor = tutoria.solicitud_tutoria.tutor;
@@ -36,7 +39,7 @@ const getTutoriasEstudianteTutor = async (req, res, next) => {
         if (respuesta.length > 0) {
             res.status(200).json(respuesta);
         } else {
-            res.status(404).json({ message: "No se encontraron tutorías" });
+            res.status(404).json({ message: "Usted es un estudiante por lo tanto no ah impartido una tutoria" });
         }
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -49,12 +52,15 @@ const getTutoriasEstudianteEstudiante = async (req, res, next) => {
         const id_telegram = req.params.id_telegram;
         const estud = await Estudiante.findOne({ id_telegram: id_telegram.trim() });
         if(!estud) {
-            return res.status(404).json({ message: 'No se encontró ningún estudiante con el id_telegram proporcionado.' });
+            return res.status(401).json({ message: 'No se encontró ningún estudiante con el id_telegram proporcionado.' });
         }
         const idEstudiante = estud._id.valueOf();
         const tutorias = await Tutoria.find().populate('aula', 'solicitud_tutoria');
         const tutoriasAgrupadas = {};
         tutorias.forEach(tutoria => {
+            const tutor = tutoria.solicitud_tutoria.tutor;
+            const aula = tutoria.aula.numero;
+            const horario = tutoria.solicitud_tutoria.horario_solicitado;
             const estudiante = tutoria.solicitud_tutoria.estudiante;
             const clase = tutoria.solicitud_tutoria.clase;
             const active = tutoria.activa;
@@ -66,6 +72,11 @@ const getTutoriasEstudianteEstudiante = async (req, res, next) => {
                         nombreestudiante: estudiante.nombre,
                         clase: clase.nombre_clase,
                         codigoclase: clase.codigo_clase,
+                        dia: horario[0].dia,
+                        hora: horario[0].hora,
+                        aula: aula,
+                        nombretutor: tutor.nombre,
+                        numerocuentatutor: tutor.numero_cuenta,
                         activa: active
                     };
                 }
@@ -78,7 +89,7 @@ const getTutoriasEstudianteEstudiante = async (req, res, next) => {
         if (respuesta.length > 0) {
             res.status(200).json(respuesta);
         } else {
-            res.status(404).json({ message: "No se encontraron tutorías" });
+            res.status(404).json({ message: "Usted es un tutor por lo tanto no ah recibido ninguna tutoria" });
         }
     } catch (error) {
         res.status(500).json({ error: error.message });
