@@ -78,6 +78,12 @@ try {
     }
 }
 
+const updateUserPassword = async (req, res) => {
+    //pedir la conrtaseña actual y la nueva contraseña
+    const { password, newPassword } = req.body;
+    //buscar el usuario en la base de datos
+    const user = await User.findById(req.params.id);
+}
 module.exports = {
     getUsers,
     getUser,

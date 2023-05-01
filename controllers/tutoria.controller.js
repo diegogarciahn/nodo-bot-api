@@ -5,14 +5,19 @@ const Estudiante = require('../models/estudiante.model');
 // Controlador para obtener todas las tutorías de un estudiante tutor
 const getTutoriasEstudianteTutor = async (req, res, next) => {
     try {
-        const idTutor = "64494f9cf6032eb0e17eff44"; //sera reemplazo por el id del tutor que este logueado
+        const id_telegram = req.params.id_telegram;
+        const estud = await Estudiante.findOne({ id_telegram: id_telegram.trim() });
+        if(!estud) {
+            return res.status(404).json({ message: 'No se encontró ningún estudiante con el id_telegram proporcionado.' });
+        }
+        const idTutor =  estud._id.valueOf();
         const tutorias = await Tutoria.find().populate('aula', 'solicitud_tutoria');
         const tutoriasAgrupadas = {};
         tutorias.forEach(tutoria => {
             const tutor = tutoria.solicitud_tutoria.tutor;
             const clase = tutoria.solicitud_tutoria.clase;
             const active = tutoria.activa;
-            if (tutor._id.toString() === idTutor) {
+            if (tutor._id.valueOf() === idTutor) {
                 const claveAgrupacion = `${tutor.numero_cuenta}-${clase._id}`;
                 if (!tutoriasAgrupadas[claveAgrupacion]) {
                     tutoriasAgrupadas[claveAgrupacion] = {
@@ -26,7 +31,6 @@ const getTutoriasEstudianteTutor = async (req, res, next) => {
             }
         });
         const respuesta = Object.values(tutoriasAgrupadas);
-
         // Ordenar por la propiedad activa (true al inicio)
         respuesta.sort((a, b) => b.activa - a.activa);
         if (respuesta.length > 0) {
@@ -42,7 +46,12 @@ const getTutoriasEstudianteTutor = async (req, res, next) => {
 // Controlador para obtener todas las tutorías de un estudiante estudiante
 const getTutoriasEstudianteEstudiante = async (req, res, next) => {
     try {
-        const idEstudiante = "643ad74e81eae928e53cb3fe"; //sera reemplazo por el id del estudiante que este logueado
+        const id_telegram = req.params.id_telegram;
+        const estud = await Estudiante.findOne({ id_telegram: id_telegram.trim() });
+        if(!estud) {
+            return res.status(404).json({ message: 'No se encontró ningún estudiante con el id_telegram proporcionado.' });
+        }
+        const idEstudiante = estud._id.valueOf();
         const tutorias = await Tutoria.find().populate('aula', 'solicitud_tutoria');
         const tutoriasAgrupadas = {};
         tutorias.forEach(tutoria => {
