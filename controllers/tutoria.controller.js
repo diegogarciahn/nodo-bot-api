@@ -159,6 +159,21 @@ const desactivarTutorias = async (req, res, next) => {
     }
 };
 
+const servirTutoria = async (req = request, res = response) => {
+    const tutorias = await Tutoria.find();
+    res.render('tutorias', {tutorias})
+  };
+  
+  const crearHorarioView = async (req = request, res = response) => {
+    return res.render('crear_horario');
+  }
+  
+  const updateHorarioView = async (req = request, res = response) => {
+    const horario = await Horario.findById(req.params._id);
+  
+    return res.render('update_horario', { horario });
+  }
+
 module.exports = {
     getTutoriasEstudianteTutor,
     getTutoriasEstudianteEstudiante,
@@ -167,5 +182,6 @@ module.exports = {
     createTutoria,
     updateTutoria,
     deleteTutoria,
-    desactivarTutorias
+    desactivarTutorias,
+    servirTutoria
 };
