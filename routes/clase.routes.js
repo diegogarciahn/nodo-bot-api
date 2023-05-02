@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { validarJWT } = require('../middlewares/validarJWT.middleware');
-const { crearClase, obtenerClases, obtenerClasePorId, actualizarClase, borrarClase } = require('../controllers/clase.controller'); // Importar el controlador de Clase
+const { crearClase, obtenerClases, obtenerClasePorId, actualizarClase, borrarClase,obtenerClasesPorCarreraNombre } = require('../controllers/clase.controller'); // Importar el controlador de Clase
 const { servirclases } = require('../controllers/usuarios.controller');
 const router = Router();
 
@@ -9,5 +9,6 @@ router.get('/', obtenerClases); // Ruta para obtener todos los clase
 router.get('/search', obtenerClasePorId); // Ruta para obtener un clase por su ID
 router.put('/:_id', actualizarClase); // Ruta para actualizar un clase por su ID
 router.delete('/:_id', borrarClase); // Ruta para borrar un clase por su ID
+router.get('/carrera/:nombre_carrera', obtenerClasesPorCarreraNombre); //Ruta buscar por ID de carrera
 
 module.exports = router;

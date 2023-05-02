@@ -1,6 +1,7 @@
 const Tutoria = require('../models/tutoria.models');
 const SolicitudTutorias = require('../models/solicitud_tutoria.model.js');
 const Estudiante = require('../models/estudiante.model');
+const { request, response } = require('express');
 
 // Controlador para obtener todas las tutorías de un estudiante tutor
 const getTutoriasEstudianteTutor = async (req, res, next) => {
@@ -195,6 +196,30 @@ const desactivarTutorias = async (req, res, next) => {
     }
 };
 
+const servirTutoria = async (req = request, res = response) => {
+    const tutorias = await Tutoria.find();
+    const solicitudTutorias = await SolicitudTutorias.find(); 
+    res.render('tutorias', { tutorias, solicitudTutorias });
+  };
+  
+  
+  //const servirSolicitudTutoria = async (req = request, res = response) => {
+   // const solicitudTutorias = await SolicitudTutorias.find();
+   // res.render('tutorias', {solicitudTutorias})
+  //};
+  
+  //Contralador para desactivar todas las tutorias
+  const desactivarTodasTutorias = async (req = request, res = response) =>{
+    try {
+      const tutorias = await Tutoria.updateMany({}, { activa: false });
+      console.log(res.status(200).json({message: 'Tutorias desactivadas'}));
+      return res.render('tutorias', {tutorias})
+    } catch (error) {
+      console.log(error);
+      return res.render('tutorias')
+    }
+  }
+
 module.exports = {
     getTutoriasEstudianteTutor,
     getTutoriasEstudianteEstudiante,
@@ -204,5 +229,8 @@ module.exports = {
     createTutoria,
     updateTutoria,
     deleteTutoria,
-    desactivarTutorias
+    desactivarTutorias,
+    servirTutoria,
+    desactivarTodasTutorias,
+   // servirSolicitudTutoria
 };
