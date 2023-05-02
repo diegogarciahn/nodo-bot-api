@@ -1,6 +1,7 @@
 const Tutoria = require('../models/tutoria.models');
 const SolicitudTutorias = require('../models/solicitud_tutoria.model.js');
 const Estudiante = require('../models/estudiante.model');
+const { request, response } = require('express');
 
 // Controlador para obtener todas las tutorías de un estudiante tutor
 const getTutoriasEstudianteTutor = async (req, res, next) => {
@@ -181,17 +182,26 @@ const desactivarTutorias = async (req, res, next) => {
 
 const servirTutoria = async (req = request, res = response) => {
     const tutorias = await Tutoria.find();
-    res.render('tutorias', {tutorias})
+    const solicitudTutorias = await SolicitudTutorias.find(); 
+    res.render('tutorias', { tutorias, solicitudTutorias });
   };
   
-  const crearHorarioView = async (req = request, res = response) => {
-    return res.render('crear_horario');
-  }
   
-  const updateHorarioView = async (req = request, res = response) => {
-    const horario = await Horario.findById(req.params._id);
+  //const servirSolicitudTutoria = async (req = request, res = response) => {
+   // const solicitudTutorias = await SolicitudTutorias.find();
+   // res.render('tutorias', {solicitudTutorias})
+  //};
   
-    return res.render('update_horario', { horario });
+  //Contralador para desactivar todas las tutorias
+  const desactivarTodasTutorias = async (req = request, res = response) =>{
+    try {
+      const tutorias = await Tutoria.updateMany({}, { activa: false });
+      console.log(res.status(200).json({message: 'Tutorias desactivadas'}));
+      return res.render('tutorias', {tutorias})
+    } catch (error) {
+      console.log(error);
+      return res.render('tutorias')
+    }
   }
 
 module.exports = {
@@ -203,5 +213,7 @@ module.exports = {
     updateTutoria,
     deleteTutoria,
     desactivarTutorias,
-    servirTutoria
+    servirTutoria,
+    desactivarTodasTutorias,
+   // servirSolicitudTutoria
 };

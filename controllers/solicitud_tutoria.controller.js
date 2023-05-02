@@ -134,6 +134,11 @@ const eliminarSolicitudTutoria = async (req, res) => {
   }
 };
 
+const servirSolicitudTutoria = async (req = request, res = response) => {
+  const solicitudTutorias = await SolicitudTutoria.find();
+  res.render('tutorias', {solicitudTutorias})
+};
+
 module.exports = {
     crearSolicitudTutoria,
     obtenerSolicitudesTutorias,
@@ -143,4 +148,5 @@ module.exports = {
     obtenerSolicitudesPorEstudiante,
     actualizarSolicitudTutoriaAdmin,
     eliminarSolicitudTutoria,
+    servirSolicitudTutoria
   };
