@@ -118,6 +118,22 @@ const getTutoria = async (req, res, next) => {
     }
 };
 
+// Controlador para obtener todas las tutorías disponibles
+const getTutoriasDisponibles = async (req, res, next) => {
+    try {
+        const tutorias = await Tutoria.find().populate('aula', 'solicitud_tutoria');
+        const tutoriasActivas = tutorias.filter(tutoria => tutoria.activa === true);
+        if (tutoriasActivas.length > 0) {
+            res.status(200).json(tutoriasActivas);
+        } else {
+            res.status(404).json({ message: "No hay tutorías activas disponibles" });
+        }
+    }
+    catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 // Controlador para crear una nueva tutoría
 const createTutoria = async (req, res, next) => {
     try {
@@ -184,6 +200,7 @@ module.exports = {
     getTutoriasEstudianteEstudiante,
     getTutorias,
     getTutoria,
+    getTutoriasDisponibles,
     createTutoria,
     updateTutoria,
     deleteTutoria,
