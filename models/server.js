@@ -26,6 +26,7 @@ class Server {
 
         // Rutas página web
         this.rutaPaginaClases = '/clases';
+        this.rutaPaginaCarreras = '/carreras';
         this.rutaPaginaAulas = '/aulas';
         this.rutaPaginaHorario = '/horarios';
         this.rutaLogin = '/login';
@@ -85,6 +86,7 @@ class Server {
 
         // Rutas de página
         this.app.use(this.rutaPaginaClases, require('../routes/clase_views.routes'));
+        this.app.use(this.rutaPaginaCarreras, require('../routes/carrera_views.routes'));
         this.app.use(this.rutaPaginaAulas, require('../routes/aulas_views.routes'));
         this.app.use(this.rutaPaginaHorario, require('../routes/horario_views.routes'));
         this.app.use(this.rutaLogin, require('../routes/auth_views.routes'));
