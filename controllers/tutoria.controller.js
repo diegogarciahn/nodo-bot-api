@@ -310,13 +310,14 @@ const desactivarTodasTutorias = async (req = request, res = response) => {
 //Aceptar las tutorias una vez dando aprobar
 const crearTutoriasView = async (req = request, res = response) => {
     const aula = await Aula.find();
-    res.render('aceptar_tutorias', { aula });
+    res.render('aceptar_tutorias', { aula});
   }
 
 //Vista Aceptar Tutorias obtiene la tutoria que le esto pasando el ID en la URL 
-const getTutoriaView = async (req, res, next) => {
-    const solicitudTutoria = await SolicitudTutorias.findById(req.params.id);
-    res.render('aceptar_tutorias', { solicitudTutoria });
+const getTutoriaView = async (req = request, res = response) => {
+    const aula = await Aula.find();
+    const solicitudTutoria = await SolicitudTutorias.findById(req.params._id);
+    res.render('aceptar_tutorias', { aula, solicitudTutoria  });
 };
 
 module.exports = {
