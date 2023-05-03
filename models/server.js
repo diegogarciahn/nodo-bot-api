@@ -81,7 +81,7 @@ class Server {
         this.app.use(this.rutaHorario, require('../routes/horario.routes'));
         this.app.use(this.rutaPermiso, require('../routes/permiso.routes'))
         this.app.use(this.rutaSolicitudTutor, require('../routes/solicitud_tutor.routes'));
-        // this.app.use(this.rutaSolicitudTutoria, require('../routes/solicitud_tutoria.routes'));
+        this.app.use(this.rutaSolicitudTutoria, require('../routes/solicitud_tutoria.routes'));
 
         // Rutas de página
         this.app.use(this.rutaPaginaClases, require('../routes/clase_views.routes'));
@@ -92,7 +92,7 @@ class Server {
         this.app.use(this.rutaPaginaSolicitudTutor, require('../routes/solicitud_tutor_views.routes'));
         this.app.use(this.rutaPaginaTuroria, require('../routes/tutorias_views.routes'));
         this.app.use(this.rutaImagenes, require('../routes/images.routes'));
-        // this.app.use(this.rutaSolicitudTutoria, require('../routes/solicitud_tutoria_views.routes'));
+        this.app.use(this.rutaPaginaSolicitudTutorias, require('../routes/solicitud_tutoria_views.routes'));
     }
 
     listen() {
