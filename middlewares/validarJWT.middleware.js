@@ -8,9 +8,7 @@ const validarJWT = (req = request, res = response, next) => {
         const token = req.cookies.token;
 
         if (!token) {
-            return res.status(404).json({
-                msg: "No hay token en la petición."
-            })
+            return res.render('login');
         }
 
         try {
