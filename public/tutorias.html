@@ -22,13 +22,13 @@
 </head>
 
 <body>
-    <%- include('partials/nav_bar.ejs', {activeItem: 5}) %> 
-    <div class="row my-2">
-        <div class="col-md-10"></div>
-        <div class="col-md-2">
-            <button class="btn btn-success btn-desactivar">Desactivar Tutorias</button>
+    <%- include('partials/nav_bar.ejs', {activeItem: 5}) %>
+        <div class="row my-2">
+            <div class="col-md-10"></div>
+            <div class="col-md-2">
+                <button class="btn btn-success btn-desactivar">Desactivar Tutorias</button>
+            </div>
         </div>
-    </div>
         <div class="row my-2">
             <div class="col-md-1"></div>
             <div class="col-md-10">
@@ -121,42 +121,43 @@
                             </thead>
                             <tbody>
                                 <% solicitudTutorias.forEach((solicitudTutoria)=> {
-                                %>
-                                <tr>
-                                    <td>
-                                        <%= solicitudTutoria.estudiante.nombre %>
-                                    </td>
-                                    <td>
-                                        <%= solicitudTutoria.estudiante.numero_cuenta %>
-                                    </td>
-                                    <td>
-                                        <%= solicitudTutoria.clase.nombre_clase %>
-                                    </td>
-                                    <td>
-                                        <%= solicitudTutoria.tutor.nombre%>
-                                    </td>
-                                    <td>
-                                        <%= solicitudTutoria.horario_solicitado.dia %>
-                                        <%= solicitudTutoria.horario_solicitado.hora %>
-                                    </td>
-                                    <td>
-                                        <% if (solicitudTutoria.estado==1) { %>
-                                            <p class="text-success">Falta Aprobacion</p>
-                                            <% } %>
-                                    </td>
-                                    <td>
-                                        <a href="#">
+                                    %>
+                                    <tr>
+                                        <td>
+                                            <%= solicitudTutoria.estudiante.nombre %>
+                                        </td>
+                                        <td>
+                                            <%= solicitudTutoria.estudiante.numero_cuenta %>
+                                        </td>
+                                        <td>
+                                            <%= solicitudTutoria.clase.nombre_clase %>
+                                        </td>
+                                        <td>
+                                            <%= solicitudTutoria.tutor.nombre%>
+                                        </td>
+                                        <td>
+                                            <%= solicitudTutoria.horario_solicitado.dia %>
+                                                <%= solicitudTutoria.horario_solicitado.hora %>
+                                        </td>
+                                        <td>
                                             <% if (solicitudTutoria.estado==1) { %>
-                                                <a href="#">
+                                                <p class="text-success">Falta Aprobacion</p>
+                                                <% } %>
+                                        </td>
+                                        <td>
+
+                                            <% if (solicitudTutoria.estado==1) { %>
+                                                <a href="https://localhost:8080/tutorias/crearTutorias?id=<%= solicitudTutoria._id %>">
                                                     <button class="btn btn-danger">Aprobar</button>
                                                 </a>
+
                                                 <% } %>
 
-                                        </a>
-                                    </td>
-                                    
-                                </tr>
-                                <% }) %>
+
+                                        </td>
+
+                                    </tr>
+                                    <% }) %>
                             </tbody>
 
                         </table>
@@ -234,9 +235,11 @@
                     </div>
                 </div>
             </div>
-        </div>         
+        </div>
+
 </body>
 <script>
+
     $(document).ready(function () {
         $('.btn-desactivar').on('click', function () {
 
@@ -267,4 +270,5 @@
         });
     });
 </script>
+
 </html>
