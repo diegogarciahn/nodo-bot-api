@@ -4,26 +4,27 @@ const Carrera = require('../models/carrera.model');
 // Crear un nuevo estudiante
 const crearEstudiante = async (req, res) => {
     try {
-        const { numero_cuenta, nombre, carrera, telefono, id_telegram } = req.body;
-        if (!numero_cuenta || !nombre || !carrera) {
-            return res.status(400).json({ mensaje: 'Debe proporcionar número de cuenta, nombre y carrera' });
-        }
-        const carreraExiste = await Carrera.findById(carrera);
-        if (!carreraExiste) {
-            return res.status(404).json({ mensaje: 'La carrera proporcionada no existe' });
-        }
-        const nuevoEstudiante = new Estudiante({
-            numero_cuenta,
-            nombre,
-            estado: '0',
-            tutor: '0',
-            estudiante: '0',
-            carrera,
-            telefono,
-            id_telegram
-        });
-        await nuevoEstudiante.save();
-        res.json({ mensaje: 'Estudiante creado exitosamente' });
+      const { numero_cuenta, nombre, carrera, telefono, id_telegram } = req.body;
+      if (!numero_cuenta || !nombre || !carrera) {
+        return res.status(400).json({ mensaje: 'Debe proporcionar número de cuenta, nombre y carrera' });
+      }
+      const carreraExiste = await Carrera.findById(carrera);
+      if (!carreraExiste) {
+        return res.status(404).json({ mensaje: 'La carrera proporcionada no existe' });
+      }
+      const nuevoEstudiante = new Estudiante({
+        numero_cuenta,
+        nombre,
+        estado: '0',
+        tutor: '0',
+        estudiante: '0',
+        carrera,
+        telefono,
+        id_telegram,
+        horario_solicitado: []
+      });
+      await nuevoEstudiante.save();
+      res.json({ mensaje: 'Estudiante creado exitosamente' });
     } catch (error) {
         console.log(error);
         res.status(500).send('Hubo un error al crear el estudiante');

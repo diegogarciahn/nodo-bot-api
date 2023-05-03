@@ -1,5 +1,6 @@
 'Ruta: /api/carreras';
 const { Router } = require('express');
+const { validarJWT } = require('../middlewares/validarJWT.middleware');
 
 const { createCarrera, getAllCarreras, getCarreraById, updateCarreraById, deleteCarreraById } = require('../controllers/carrera.controller');
 

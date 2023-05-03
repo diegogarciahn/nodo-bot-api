@@ -4,15 +4,10 @@ const Rol = require('./rol.models');
 const userSchema = new mongoose.Schema({
     nombre_usuario: String,
     password: String,
-    rol: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Rol',
-        required: true,
-        autopopulate: true
-    },
     telefono: String
 },{
-    collection: 'usuario'
+    collection: 'usuario',
+    timeseries: false
 });
 
 userSchema.plugin(require('mongoose-autopopulate'));
