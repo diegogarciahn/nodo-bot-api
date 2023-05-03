@@ -18,15 +18,16 @@
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-    <title>TUTORIAS</title>
+    <title>Tutorías</title>
 </head>
 
 <body>
-    <%- include('partials/nav_bar.ejs', {activeItem: 5}) %>
+    <%- include('partials/nav_bar.ejs', {activeItem: 7}) %>
         <div class="row my-2">
-            <div class="col-md-10"></div>
+            <div class="col-md-1"></div>
+            <div class="col-md-9"><h2>Tutorías</h2></div>
             <div class="col-md-2">
-                <button class="btn btn-success btn-desactivar">Desactivar Tutorias</button>
+                <button class="btn btn-success btn-desactivar">Desactivar Tutorías</button>
             </div>
         </div>
         <div class="row my-2">
@@ -58,6 +59,7 @@
                                     <th>Aula</th>
                                     <th>Tutoria</th>
                                     <th>Tutor</th>
+                                    <th>Estudiante</th>
                                     <th>Horario</th>
                                     <th>Estatus</th>
                                 </tr>
@@ -75,6 +77,9 @@
                                         </td>
                                         <td>
                                             <%= tutorias.solicitud_tutoria.tutor.nombre %>
+                                        </td>
+                                        <td>
+                                            <%= tutorias.solicitud_tutoria.estudiante.nombre %>
                                         </td>
                                         <td>
                                             <% tutorias.solicitud_tutoria.horario_solicitado.forEach((horario) => { %>
