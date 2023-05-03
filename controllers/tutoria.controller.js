@@ -1,6 +1,7 @@
 const Tutoria = require('../models/tutoria.models');
 const SolicitudTutorias = require('../models/solicitud_tutoria.model.js');
 const Estudiante = require('../models/estudiante.model');
+const Aula = require('../models/aula.model');
 const {
     request,
     response
@@ -285,11 +286,9 @@ const servirTutoria = async (req = request, res = response) => {
 };
 
 
-//const servirSolicitudTutoria = async (req = request, res = response) => {
-// const solicitudTutorias = await SolicitudTutorias.find();
-// res.render('tutorias', {solicitudTutorias})
-//};
-
+// --> Controladores para las vistas 
+//
+//
 //Contralador para desactivar todas las tutorias
 const desactivarTodasTutorias = async (req = request, res = response) => {
     try {
@@ -308,6 +307,18 @@ const desactivarTodasTutorias = async (req = request, res = response) => {
     }
 }
 
+//Aceptar las tutorias una vez dando aprobar
+const crearTutoriasView = async (req = request, res = response) => {
+    const aula = await Aula.find();
+    res.render('aceptar_tutorias', { aula });
+  }
+
+//Vista Aceptar Tutorias obtiene la tutoria que le esto pasando el ID en la URL 
+const getTutoriaView = async (req, res, next) => {
+    const solicitudTutoria = await SolicitudTutorias.findById(req.params.id);
+    res.render('aceptar_tutorias', { solicitudTutoria });
+};
+
 module.exports = {
     getTutoriasEstudianteTutor,
     getTutoriasEstudianteEstudiante,
@@ -322,4 +333,6 @@ module.exports = {
     servirTutoria,
     desactivarTodasTutorias,
     // servirSolicitudTutoria
+    crearTutoriasView,
+    getTutoriaView
 };

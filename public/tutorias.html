@@ -147,7 +147,7 @@
                                     <td>
                                         <a href="#">
                                             <% if (solicitudTutoria.estado==1) { %>
-                                                <a href="#">
+                                                <a href="https://localhost:8080/tutorias/crearTutorias?id=<%= solicitudTutoria._id %>&nombre=<%= solicitudTutoria.clase.nombre_clase %>">
                                                     <button class="btn btn-danger">Aprobar</button>
                                                 </a>
                                                 <% } %>
