@@ -211,12 +211,12 @@ const servirTutoria = async (req = request, res = response) => {
   //Contralador para desactivar todas las tutorias
   const desactivarTodasTutorias = async (req = request, res = response) =>{
     try {
-      const tutorias = await Tutoria.updateMany({}, { activa: false });
-      console.log(res.status(200).json({message: 'Tutorias desactivadas'}));
-      return res.render('tutorias', {tutorias})
+      await Tutoria.updateMany({}, { activa: false });
+      //console.log(error);
+      res.status(200).json({message: 'Tutorias desactivadas'})
     } catch (error) {
       console.log(error);
-      return res.render('tutorias')
+      res.status(500).json({ error: error.message });
     }
   }
 
