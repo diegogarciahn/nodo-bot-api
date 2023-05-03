@@ -17,58 +17,44 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
-    <title>Horarios</title>
+    <title>Carreras</title>
 </head>
 
 <body>
-    <%- include('partials/nav_bar.ejs', {activeItem: 3}) %>
+    <%- include('partials/nav_bar.ejs', {activeItem: 8}) %>
         <div class="row my-2">
             <div class="col-md-1"></div>
             <div class="col-md-9">
-                <h2>Horarios</h2>
+                <h2>Carreras</h2>
             </div>
             <div class="col-md-2">
-                <a href="https://localhost:8080/horarios/crear"><button class="btn btn-success">Crear
-                        Horario </button></a>
+                <a href="https://localhost:8080/carreras/create"><button class="btn btn-success">Crear Carrera</button></a>
             </div>
         </div>
-
         <div class="row my-2">
             <div class="col-md-1"></div>
             <div class="col-md-10">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Dia</th>
-                            <th>Hora</th>
+                            <th>Nombre</th>
                             <th class="">Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <% horarios.forEach((horario)=> {
-                            %>
+                        <% carreras.forEach((carrera)=> { %>
                             <tr>
                                 <td>
-                                    <%= horario.dia %>
+                                    <%= carrera.nombre_carrera %>
                                 </td>
-
                                 <td>
-                                    <%= horario.hora %>
-                                </td>
-
-                                <td>
-                                    <a href="https://localhost:8080/horarios/actualizar/<%= horario._id %>">
-                                        <button class="btn btn-primary">Actualizar</button>
-                                    </a>
-                                    <button data-id="<%= horario._id %>" data-dia="<%= horario.dia %>"
-                                        data-hora="<%= horario.hora %>"
+                                    <a href="https://localhost:8080/carreras/update/<%= carrera._id %>"><button
+                                            class="btn btn-primary">Actualizar</button></a>
+                                    <button data-id="<%= carrera._id %>" data-name="<%= carrera.nombre_carrera %>"
                                         class="btn btn-danger btn-eliminar">Eliminar</button>
-
                                 </td>
                             </tr>
-
-                            <% })%>
+                            <% }) %>
                     </tbody>
                 </table>
             </div>
@@ -77,10 +63,10 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content" style="border-radius: 15px;">
                     <div class="modal-header">
-                        <h2>Eliminar Horario</h2>
+                        <h2>Eliminar Carrera</h2>
                     </div>
                     <div class="modal-body">
-                        <p id="horario-eliminar" data-id=""></p>
+                        <p id="carrera-eliminar" data-id=""></p>
                     </div>
                     <div class="modal-footer justify-content-center">
                         <button id="ok" type="button" class="btn btn-primary">Aceptar</button>
@@ -89,6 +75,7 @@
                 </div>
             </div>
         </div>
+
 </body>
 <script>
     $(document).ready(function () {
@@ -101,21 +88,18 @@
 
         $('.btn-eliminar').on('click', function () {
             var id = $(this).attr('data-id');
-            var dia = $(this).attr('data-dia');
-            var hora = $(this).attr('data-hora')
-            console.log(id);
-            //console.log(dia);
-            $('#horario-eliminar').attr('data-id', id);
-            $('#horario-eliminar').text('¿Estás seguro de eliminar el horario: ' + dia + ', ' + hora + '?');
+            var nombre = $(this).attr('data-name');
+            $('#carrera-eliminar').attr('data-id', id);
+            $('#carrera-eliminar').text('¿Estás seguro de eliminar la carrera "' + nombre + '"?');
             $('#modal').show();
         });
 
         $('#ok').on('click', function () {
-            var id = $('#horario-eliminar').attr('data-id');
+            var id = $('#carrera-eliminar').attr('data-id');
             console.log(id);
             const options = {
                 method: 'delete',
-                url: 'https://localhost:8080/api/horario/eliminarHorario/' + id,
+                url: 'https://localhost:8080/api/carreras/' + id,
             }
 
             axios

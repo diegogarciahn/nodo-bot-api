@@ -26,12 +26,16 @@ class Server {
 
         // Rutas página web
         this.rutaPaginaClases = '/clases';
+        this.rutaPaginaCarreras = '/carreras';
         this.rutaPaginaAulas = '/aulas';
         this.rutaPaginaHorario = '/horarios';
         this.rutaLogin = '/login';
         this.rutaPaginaEstudiantes = '/estudiantes';
         this.rutaPaginaSolicitudTutor = '/solicitud_tutor';
         this.rutaPaginaTuroria = '/tutorias'
+        this.rutaPaginaSolicitudTutorias = '/solicitud_tutorias';
+        this.rutaImagenes = '/images'
+
 
         // Midlewares: funciones que siempre se van a ejecutar cuando iniciamos un servidor
         this.middlewares();
@@ -51,12 +55,17 @@ class Server {
         // Lectura y parseo del body
         this.app.use(express.json()); // Función de express que permite leer y parsear el body de una petición
 
-        // Directorio público
-        this.app.use(express.static('public'));
-
         this.app.set('view engine', 'html');
         this.app.engine('html', require('ejs').renderFile);
         this.app.set('views', path.join(__dirname, '../public'));
+
+        // Directorio público
+        // this.app.use('images/', express.static('public/images'));
+
+        this.app.get('/', (req, res) => {
+            res.render('index');
+        });
+
     }
 
     // Endpoints 
@@ -77,12 +86,15 @@ class Server {
 
         // Rutas de página
         this.app.use(this.rutaPaginaClases, require('../routes/clase_views.routes'));
+        this.app.use(this.rutaPaginaCarreras, require('../routes/carrera_views.routes'));
         this.app.use(this.rutaPaginaAulas, require('../routes/aulas_views.routes'));
         this.app.use(this.rutaPaginaHorario, require('../routes/horario_views.routes'));
         this.app.use(this.rutaLogin, require('../routes/auth_views.routes'));
         this.app.use(this.rutaPaginaEstudiantes, require('../routes/estudiante_views.routes'));
         this.app.use(this.rutaPaginaSolicitudTutor, require('../routes/solicitud_tutor_views.routes'));
         this.app.use(this.rutaPaginaTuroria, require('../routes/tutorias_views.routes'));
+        this.app.use(this.rutaImagenes, require('../routes/images.routes'));
+        this.app.use(this.rutaPaginaSolicitudTutorias, require('../routes/solicitud_tutoria_views.routes'));
     }
 
     listen() {

@@ -1,7 +1,11 @@
 <header>
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">NODO</a>
+            <a class="navbar-brand" href="/">
+                <div class="col-2">
+                    <img src="https://localhost:8080/images/logo-white-03.png" class="img-fluid" alt="">
+                </div>
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
                 aria-label="Toggle navigation">
@@ -18,7 +22,11 @@
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                         <li class="nav-item">
                             <a class="nav-link <%= (activeItem === 0) ? 'active' : '' %>" aria-current="page"
-                                href="#">Inicio</a>
+                                href="/">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <%= (activeItem === 8) ? 'active' : '' %>"
+                                href="<%= (activeItem === 8) ? '#' : 'https://localhost:8080/carreras/' %>">Carreras</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link <%= (activeItem === 1) ? 'active' : '' %>"
@@ -34,7 +42,16 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link <%= (activeItem === 4) ? 'active' : '' %>"
-                                href="<%= (activeItem === 4) ? '#' : 'https://localhost:8080/solicitud_tutor/' %>">Solicitudes</a>
+                                href="<%= (activeItem === 4) ? '#' : 'https://localhost:8080/solicitud_tutor/' %>">Solicitudes
+                                Tutores</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <%= (activeItem === 7) ? 'active' : '' %>"
+                                href="<%= (activeItem === 7) ? '#' : 'https://localhost:8080/solicitud_tutorias/' %>">Solicitudes Tutorías</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <%= (activeItem === 6) ? 'active' : '' %>"
+                                href="<%= (activeItem === 6) ? '#' : 'https://localhost:8080/tutorias/' %>">Tutorías</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link <%= (activeItem === 5) ? 'active' : '' %>"

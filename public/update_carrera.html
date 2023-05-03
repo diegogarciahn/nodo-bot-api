@@ -18,37 +18,23 @@
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-    <title>Clases</title>
+    <title>Actualizar carrera </title>
 </head>
 
 <body>
-    <%- include('partials/nav_bar.ejs', {activeItem: 1}) %>
-
+    <%- include('partials/nav_bar.ejs', {activeItem: 2}) %>
+    
     <div class="container my-5" style="border: 1px solid black; width: 60%; height: 500px; border-radius: 15px;">
 
         <div class="row justify-content-center">
             <div class="col-md-2 col-2"></div>
             <div class="col-md-8 col-8  my-5">
                 <form class="form">
-                    <h2>Crear clase</h2>
+                    <h2>Actualizar Carrera</h2>
                     <div class="form-group my-2">
-                        <label for="nombre_clase">Nombre Clase:</label>
-                        <input type="text" class="form-control" id="nombre_clase" placeholder="Matemáticas 101"
-                            required>
-                    </div>
-                    <div class="form-group my-2">
-                        <label for="codigo_clase">Código Clase:</label>
-                        <input type="text" class="form-control" id="codigo_clase" placeholder="MM-101" required>
-                    </div>
-                    <div class="form-group my-2">
-                        <label for="codigo_clase">Carrera:</label>
-                        <select class="form-select" name="carrera" id="carrera">
-                            <% carreras.forEach((carrera)=> { %>
-                                <option value="<%= carrera._id %>" >
-                                    <%= carrera.nombre_carrera %>
-                                </option>
-                                <% }) %>
-                        </select>
+                        <label for="nombre_carrera">Nombre de carrera:</label>
+                        <input type="text" class="form-control" value="<%= carrera.nombre_carrera %>" id="nombre_carrera"
+                            placeholder="Ing. en Sistemas" required>
                     </div>
                     <div class="row justify-content-center my-5">
                         <div class="col-md-3">
@@ -77,27 +63,20 @@
         });
 
         function enviarForm() {
-            var nombre_clase = $('#nombre_clase').val();
-            var codigo_clase = $('#codigo_clase').val();
-            var carrera = {
-                "_id": $('#carrera').val(),
-                "nombre_carrera": $('#carrera').children("option:selected").text().trim()
-            }
+            var nombre_carrera = $('#nombre_carrera').val();
 
             const options = {
-                method: 'POST',
-                url: 'https://localhost:8080/api/clases/',
+                method: 'put',
+                url: 'https://localhost:8080/api/carreras/' + '<%= carrera._id %>',
                 data: {
-                    "nombre_clase": nombre_clase,
-                    "codigo_clase": codigo_clase,
-                    "carrera": carrera
+                    "nombre_carrera": nombre_carrera,
                 }
             }
 
             axios
                 .request(options)
                 .then(function (response) {
-                    alert('Creación exitosa');
+                    alert('Actualización exitosa');
                     location.reload();
                 })
                 .catch(function (error) {

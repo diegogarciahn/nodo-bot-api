@@ -67,10 +67,30 @@ const deleteCarreraById = async (req, res) => {
     }
 };
 
+const servirCarreras = async (req = request, res = response) => {
+    const carreras = await Carrera.find();
+
+    return res.render('ver_carreras', { carreras });
+}
+
+const crearCarreraView = async (req = request, res = response) => {
+    return res.render('crear_carrera');
+}
+
+const updateCarreraView = async (req = request, res = response) => {
+    const carrera = await Carrera.findById(req.params._id);
+
+    return res.render('update_carrera', { carrera });
+}
+
+
 module.exports = {
     createCarrera,
     getAllCarreras,
     getCarreraById,
     updateCarreraById,
     deleteCarreraById,
+    servirCarreras,
+    crearCarreraView,
+    updateCarreraView
 }

@@ -85,6 +85,9 @@ const getUser = async (req = request, res = response) => {
 }
 
 const loginView = async (req = request, res = response) => {
+    res.cookie('token', '', {
+        httpOnly: true
+    });
     return res.render('login');
 }
 
