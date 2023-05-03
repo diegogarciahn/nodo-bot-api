@@ -178,6 +178,18 @@ const createTutoria = async (req, res, next) => {
                 error: 'Los parámetros aula y solicitud_tutoria son requeridos.'
             });
         }
+    // Buscar la solicitud de tutoría correspondiente
+    const solicitud = await SolicitudTutorias.findById(solicitud_tutoria);
+    if (!solicitud) {
+    console.log(solicitud_tutoria)
+      return res.status(404).json({
+        error: 'No se encontró la solicitud de tutoría.'
+      });
+    }
+    // Actualizar el estado de la solicitud de tutoría a "creada"
+    solicitud.estado = '0';
+    await solicitud.save();
+    // Crear la tutoría
         const tutoria = new Tutoria({
             aula,
             solicitud_tutoria,

@@ -58,10 +58,8 @@
                                     <th>Aula</th>
                                     <th>Tutoria</th>
                                     <th>Tutor</th>
-                                    <th>Dia</th>
                                     <th>Horario</th>
                                     <th>Estatus</th>
-                                    <th>Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -79,30 +77,19 @@
                                             <%= tutorias.solicitud_tutoria.tutor.nombre %>
                                         </td>
                                         <td>
-                                            <%= tutorias.solicitud_tutoria.horario_solicitado.dia %>
-                                        </td>
-                                        <td>
-                                            <%= tutorias.solicitud_tutoria.horario_solicitado.hora %>
+                                            <% tutorias.solicitud_tutoria.horario_solicitado.forEach((horario) => { %>
+                                                <p><%= horario.dia %>: <%= horario.hora %></p>
+                                             <% }); %>
+                                             
                                         </td>
                                         <td>
                                             <% if (tutorias.activa==1) { %>
                                                 <p class="text-success">activa</p>
                                                 <% } %>
                                         </td>
-                                        <td>
-                                            <a href="#">
-                                                <% if (tutorias.activa==1) { %>
-                                                    <a href="#">
-                                                        <button class="btn btn-danger">Desactivar</button>
-                                                    </a>
-                                                    <% } %>
-
-                                            </a>
-                                        </td>
                                     </tr>
                                     <% }}) %>
                             </tbody>
-
                         </table>
                     </div>
                     <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
@@ -133,21 +120,27 @@
                                             <%= solicitudTutoria.clase.nombre_clase %>
                                         </td>
                                         <td>
-                                            <%= solicitudTutoria.tutor.nombre%>
+                                            <%= solicitudTutoria.tutor.nombre %>
                                         </td>
                                         <td>
-                                            <%= solicitudTutoria.horario_solicitado.dia %>
-                                                <%= solicitudTutoria.horario_solicitado.hora %>
+                                             <% solicitudTutoria.horario_solicitado.forEach((horario) => { %>
+                                                <p><%= horario.dia %>: <%= horario.hora %></p>
+                                             <% }); %>
+
+                                            
                                         </td>
                                         <td>
-                                            <% if (solicitudTutoria.estado==1) { %>
-                                                <p class="text-success">Falta Aprobacion</p>
-                                                <% } %>
+                                            <% if (solicitudTutoria.estado == 1) { %>
+                                                <p class="text-danger">Falta Aprobacion</p>
+                                            <% } else { %>
+                                                <p class="text-success ">Aprobado</p>
+                                            <% } %>                                            
                                         </td>
                                         <td>
 
                                             <% if (solicitudTutoria.estado==1) { %>
-                                                <a href="https://localhost:8080/tutorias/crearTutorias?id=<%= solicitudTutoria._id %>">
+                                                <a href="https://localhost:8080/tutorias/crearTutorias?id=<%= solicitudTutoria._id %>&nombre=<%= solicitudTutoria.clase.nombre_clase %>
+                                                    ">
                                                     <button class="btn btn-danger">Aprobar</button>
                                                 </a>
 
@@ -170,7 +163,6 @@
                                     <th>Aula</th>
                                     <th>Tutoria</th>
                                     <th>Tutor</th>
-                                    <th>Dia</th>
                                     <th>Horario</th>
                                     <th>Estatus</th>
                                 </tr>
@@ -190,25 +182,15 @@
                                             <%= tutorias.solicitud_tutoria.tutor.nombre %>
                                         </td>
                                         <td>
-                                            <%= tutorias.solicitud_tutoria.horario_solicitado.dia %>
-                                        </td>
-                                        <td>
-                                            <%= tutorias.solicitud_tutoria.horario_solicitado.hora %>
+                                            <% tutorias.solicitud_tutoria.horario_solicitado.forEach((horario) => { %>
+                                                <p><%= horario.dia %>: <%= horario.hora %></p>
+                                             <% }); %>
+                                             
                                         </td>
                                         <td>
                                             <% if (tutorias.activa==0) { %>
                                                 <p class="text-danger">Inactiva</p>
                                                 <% } %>
-                                        </td>
-                                        <td>
-                                            <a href="#">
-                                                <% if (tutorias.activa==1) { %>
-                                                    <a href="#">
-                                                        <button class="btn btn-danger">Desactivar</button>
-                                                    </a>
-                                                    <% } %>
-
-                                            </a>
                                         </td>
                                     </tr>
                                     <% }}) %>
@@ -239,7 +221,11 @@
 
 </body>
 <script>
-
+    $('.table').DataTable({
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
+        },
+    });
     $(document).ready(function () {
         $('.btn-desactivar').on('click', function () {
 
