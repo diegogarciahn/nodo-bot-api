@@ -1,7 +1,11 @@
 <header>
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">NODO</a>
+            <a class="navbar-brand" href="#">
+                <div class="col-2">
+                    <img src="https://localhost:8080/images/logo-white-03.png" class="img-fluid" alt="">
+                </div>
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
                 aria-label="Toggle navigation">
@@ -39,6 +43,10 @@
                         <li class="nav-item">
                             <a class="nav-link <%= (activeItem === 5) ? 'active' : '' %>"
                                 href="<%= (activeItem === 5) ? '#' : 'https://localhost:8080/estudiantes/' %>">Estudiantes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <%= (activeItem === 6) ? 'active' : '' %>"
+                                href="<%= (activeItem === 6) ? '#' : 'https://localhost:8080/tutorias/' %>">Tutorías</a>
                         </li>
                         <li>
                             <hr>

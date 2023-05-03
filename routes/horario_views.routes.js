@@ -1,11 +1,12 @@
 const { Router } = require('express');
-const { servirHorarios, crearHorarioView,updateHorarioView } = require('../controllers/horario.controller');
+const { servirHorarios, crearHorarioView, updateHorarioView } = require('../controllers/horario.controller');
+const { validarJWT } = require('../middlewares/validarJWT.middleware');
 
 const router = Router();
-router.get('/', servirHorarios);
+router.get('/', validarJWT, servirHorarios);
 
-router.get('/crear', crearHorarioView);
+router.get('/crear', validarJWT, crearHorarioView);
 
-router.get('/actualizar/:_id', updateHorarioView);
+router.get('/actualizar/:_id', validarJWT, updateHorarioView);
 
 module.exports = router;
