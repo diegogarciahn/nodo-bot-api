@@ -12,8 +12,8 @@ router.get('/obtenerCarreras', getAllCarreras);
 
 router.get('/buscar', getCarreraById);
 
-router.put('/', updateCarreraById);
+router.put('/:id', updateCarreraById);
 
-router.delete('/', deleteCarreraById);
+router.delete('/:id', deleteCarreraById);
 
 module.exports = router;

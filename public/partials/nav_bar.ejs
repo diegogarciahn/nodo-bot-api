@@ -25,6 +25,10 @@
                                 href="/">Inicio</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link <%= (activeItem === 8) ? 'active' : '' %>"
+                                href="<%= (activeItem === 8) ? '#' : 'https://localhost:8080/carreras/' %>">Carreras</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link <%= (activeItem === 1) ? 'active' : '' %>"
                                 href="<%= (activeItem === 1) ? '#' : 'https://localhost:8080/clases/' %>">Clases</a>
                         </li>

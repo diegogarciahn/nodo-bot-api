@@ -116,7 +116,6 @@ const obtenerEstudiantePorId = async (req, res) => {
 
 // Actualizar un estudiante por su ID
 const actualizarEstudiante = async (req, res) => {
-    console.log(req.body);
     try {
         const estudianteActualizado = await Estudiante.findByIdAndUpdate(req.query.id, {
             activo: req.body.activo
