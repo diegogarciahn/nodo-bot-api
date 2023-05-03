@@ -18,71 +18,77 @@
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-    <title>horarios</title>
+    <title>Horarios</title>
 </head>
 
 <body>
     <%- include('partials/nav_bar.ejs', {activeItem: 3}) %>
-    <div class="row my-2">
-        <div class="col-md-10"></div>
-        <div class="col-md-2">
-            <a href="https://localhost:8080/horarios/crear"><button class="btn btn-success">Crear Horarios</button></a>
+        <div class="row my-2">
+            <div class="col-md-1"></div>
+            <div class="col-md-9">
+                <h2>Horarios</h2>
+            </div>
+            <div class="col-md-2">
+                <a href="https://localhost:8080/horarios/crear"><button class="btn btn-success">Crear
+                        Horario </button></a>
+            </div>
         </div>
-    </div>
 
-    <div class="row my-2">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Dia</th>
-                        <th>Hora</th>
-                        <th class="">Opciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% horarios.forEach((horario)=> {
-                        %>
+        <div class="row my-2">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td>
-                                <%= horario.dia %>
-                            </td>
-
-                            <td>
-                                <%= horario.hora %>
-                            </td>
-
-                            <td>
-                                <a href="https://localhost:8080/horarios/actualizar/<%= horario._id %>">
-                                    <button class="btn btn-primary">Actualizar</button>
-                                </a>
-                                <button data-id="<%= horario._id %>" data-dia="<%= horario.dia %>" data-hora="<%= horario.hora %>" class="btn btn-danger btn-eliminar">Eliminar</button>
-
-                            </td>
+                            <th>Dia</th>
+                            <th>Hora</th>
+                            <th class="">Opciones</th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        <% horarios.forEach((horario)=> {
+                            %>
+                            <tr>
+                                <td>
+                                    <%= horario.dia %>
+                                </td>
 
-                        <% })%>
-                </tbody>
-            </table>
+                                <td>
+                                    <%= horario.hora %>
+                                </td>
+
+                                <td>
+                                    <a href="https://localhost:8080/horarios/actualizar/<%= horario._id %>">
+                                        <button class="btn btn-primary">Actualizar</button>
+                                    </a>
+                                    <button data-id="<%= horario._id %>" data-dia="<%= horario.dia %>"
+                                        data-hora="<%= horario.hora %>"
+                                        class="btn btn-danger btn-eliminar">Eliminar</button>
+
+                                </td>
+                            </tr>
+
+                            <% })%>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-    <div id="modal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content" style="border-radius: 15px;">
-                <div class="modal-header">
-                    <h2>Eliminar Horario</h2>
-                </div>
-                <div class="modal-body">
-                    <p id="horario-eliminar" data-id=""></p>
-                </div>
-                <div class="modal-footer justify-content-center">
-                    <button id="ok" type="button" class="btn btn-primary">Aceptar</button>
-                    <button id="cancel" type="button" class="btn btn-secondary">Cancelar</button>
+        <div id="modal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content" style="border-radius: 15px;">
+                    <div class="modal-header">
+                        <h2>Eliminar Horario</h2>
+                    </div>
+                    <div class="modal-body">
+                        <p id="horario-eliminar" data-id=""></p>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button id="ok" type="button" class="btn btn-primary">Aceptar</button>
+                        <button id="cancel" type="button" class="btn btn-secondary">Cancelar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 </body>
 <script>
     $(document).ready(function () {
@@ -129,4 +135,5 @@
         });
     });
 </script>
+
 </html>

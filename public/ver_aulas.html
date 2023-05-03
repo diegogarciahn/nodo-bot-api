@@ -19,58 +19,62 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <title>Aulas</title>
 </head>
+
 <body>
     <%- include('partials/nav_bar.ejs', {activeItem: 2}) %>
-    <div class="row my-2">
-        <div class="col-md-10"></div>
-        <div class="col-md-2">
-            <a href="https://localhost:8080/aulas/crear"><button class="btn btn-success">Crear aula</button></a>
+        <div class="row my-2">
+            <div class="col-md-1"></div>
+            <div class="col-md-9">
+                <h2>Aulas</h2>
+            </div>
+            <div class="col-md-2">
+                <a href="https://localhost:8080/aulas/crear"><button class="btn btn-success">Crear aula</button></a>
+            </div>
         </div>
-    </div>
-    <div class="row my-2">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Número</th>
-                        <th class="">Opciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% aulas.forEach((aula)=> { %>
+        <div class="row my-2">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td>
-                                <%= aula.numero %>
-                            </td>
-                            <td>
-                                <a href="https://localhost:8080/aulas/actualizar/<%= aula._id %>"><button
-                                        class="btn btn-primary">Actualizar</button></a>
-                                <button data-id="<%= aula._id %>" data-name="<%= aula.numero %>"
-                                    class="btn btn-danger btn-eliminar">Eliminar</button>
-                            </td>
+                            <th>Número</th>
+                            <th class="">Opciones</th>
                         </tr>
-                        <% }) %>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <% aulas.forEach((aula)=> { %>
+                            <tr>
+                                <td>
+                                    <%= aula.numero %>
+                                </td>
+                                <td>
+                                    <a href="https://localhost:8080/aulas/actualizar/<%= aula._id %>"><button
+                                            class="btn btn-primary">Actualizar</button></a>
+                                    <button data-id="<%= aula._id %>" data-name="<%= aula.numero %>"
+                                        class="btn btn-danger btn-eliminar">Eliminar</button>
+                                </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-    <div id="modal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content" style="border-radius: 15px;">
-                <div class="modal-header">
-                    <h2>Eliminar Aula</h2>
-                </div>
-                <div class="modal-body">
-                    <p id="aula-eliminar" data-id=""></p>
-                </div>
-                <div class="modal-footer justify-content-center">
-                    <button id="ok" type="button" class="btn btn-primary">Aceptar</button>
-                    <button id="cancel" type="button" class="btn btn-secondary">Cancelar</button>
+        <div id="modal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content" style="border-radius: 15px;">
+                    <div class="modal-header">
+                        <h2>Eliminar Aula</h2>
+                    </div>
+                    <div class="modal-body">
+                        <p id="aula-eliminar" data-id=""></p>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button id="ok" type="button" class="btn btn-primary">Aceptar</button>
+                        <button id="cancel" type="button" class="btn btn-secondary">Cancelar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
 </body>
 <script>
