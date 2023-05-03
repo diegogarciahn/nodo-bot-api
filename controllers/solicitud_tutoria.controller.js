@@ -1,4 +1,5 @@
 const SolicitudTutorias = require('../models/solicitud_tutoria.model.js');
+const Tutorias = require('../models/tutoria.models.js');
 
 // Controlador para crear una nueva solicitud de tutoría
 const crearSolicitudTutoria = async (req, res) => {
@@ -134,6 +135,12 @@ const eliminarSolicitudTutoria = async (req, res) => {
   }
 };
 
+const servirSolicitudTutoria = async (req = request, res = response) => {
+  const solicitudTutorias = await SolicitudTutorias.find();
+  const tutorias = await Tutorias.find();
+  res.render('tutorias', {solicitudTutorias, tutorias})
+};
+
 module.exports = {
     crearSolicitudTutoria,
     obtenerSolicitudesTutorias,
@@ -143,4 +150,5 @@ module.exports = {
     obtenerSolicitudesPorEstudiante,
     actualizarSolicitudTutoriaAdmin,
     eliminarSolicitudTutoria,
+    servirSolicitudTutoria
   };
