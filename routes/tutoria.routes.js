@@ -5,6 +5,7 @@ const controller  = require('../controllers/tutoria.controller');
 const { validarJWT } = require('../middlewares/validarJWT.middleware');
 const router = Router();
 
+
 router.get('/obtenerTutorias',                     controller.getTutorias);
 router.get('/obtenerTutoria/:id',                  controller.getTutoria);
 router.get('/obtenerTutoriasEstudianteTutor',      controller.getTutoriasEstudianteTutor);

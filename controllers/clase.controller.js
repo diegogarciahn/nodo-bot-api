@@ -106,6 +106,32 @@ const updateClaseView = async (req = request, res = response) => {
     return res.render('updateclase', {clase, carreras});
 }
 
+
+const obtenerClasesPorCarreraNombre = async (req, res) => {
+    try {
+      const nombreCarrera = req.params.nombre_carrera;
+  
+      // Busca la carrera por su nombre
+      const carrera = await Carrera.findOne({ nombre_carrera: nombreCarrera });
+  
+      if (!carrera) {
+        return res.status(404).json({ mensaje: 'No se encontró la carrera especificada.' });
+      }
+  
+      // Busca todas las clases de la carrera
+      const clases = await Clase.find({ carrera: carrera._id });
+  
+      res.json(clases);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send('Hubo un error al obtener las clases por carrera.');
+    }
+  };
+  
+
+
+
+
 // Exportar las funciones del controlador
 module.exports = {
     crearClase,
@@ -115,5 +141,6 @@ module.exports = {
     borrarClase,
     servirclases,
     crearClaseView,
-    updateClaseView
+    updateClaseView,
+    obtenerClasesPorCarreraNombre
 };

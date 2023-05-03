@@ -1,5 +1,7 @@
+const Clase = require('../models/clase.model');
 const Estudiante = require('../models/estudiante.model');
 const SolicitudTutor = require('../models/solicitud_tutor.model');
+const Horario = require('../models/horario.models');
 
 const crearSolicitudTutor = async (req, res) => {
   try {
@@ -7,10 +9,18 @@ const crearSolicitudTutor = async (req, res) => {
     if (!estudiante || !clase || !horario_solicitado) {
       return res.status(400).json({ mensaje: 'Debe proporcionar estudiante, clase y horario_solicitado' });
     }
+    const claseExiste = await Clase.findById(clase);
+      if (!claseExiste) {
+        return res.status(404).json({ mensaje: 'La clase proporcionada no existe' });
+      }
+      const horariosGuardados = await Promise.all(horario_solicitado.map(async (_id) => {
+        const horario = await Horario.findById(_id);
+        return horario._id;
+      }));
     const nuevaSolicitudTutor = new SolicitudTutor({
       estudiante,
       clase,
-      horario_solicitado,
+      horario_solicitado: horariosGuardados,
       estado: '0', 
       fecha_hora: req.body.fecha_hora || Date.now(),
       fecha_hora_resuelto: req.body.fecha_hora_resuelto,
