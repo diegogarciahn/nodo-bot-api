@@ -22,17 +22,13 @@
 </head>
 
 <body>
-    <%- include('partials/nav_bar.ejs', {activeItem: 5}) %>
-        <div class="row my-2">
-            <div class="col-md-1"></div>
-            <div class="col-md-9">
-                <h2>Tutorias</h2>
-            </div>
-            <div class="col-md-2">
-            <button class="btn btn-danger btn-desactivarTodas">Desactivar Tutorias</button>
+    <%- include('partials/nav_bar.ejs', {activeItem: 5}) %> 
+    <div class="row my-2">
+        <div class="col-md-10"></div>
+        <div class="col-md-2">
+            <button class="btn btn-success btn-desactivar">Desactivar Tutorias</button>
         </div>
-        </div>
-
+    </div>
         <div class="row my-2">
             <div class="col-md-1"></div>
             <div class="col-md-10">
@@ -137,7 +133,7 @@
                                         <%= solicitudTutoria.clase.nombre_clase %>
                                     </td>
                                     <td>
-                                        <%= solicitudTutoria.tutor.estudiante.nombre%>
+                                        <%= solicitudTutoria.tutor.nombre%>
                                     </td>
                                     <td>
                                         <%= solicitudTutoria.horario_solicitado.dia %>
@@ -227,10 +223,10 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content" style="border-radius: 15px;">
                     <div class="modal-header">
-                        <h2>Desactivar Todas las Tutorias</h2>
+                        <h2>Desactivar Tutorias</h2>
                     </div>
                     <div class="modal-body">
-                        <p id="horario-desactivar"></p>
+                        <p id="tutorias-desactivar" data-id=""></p>
                     </div>
                     <div class="modal-footer justify-content-center">
                         <button id="ok" type="button" class="btn btn-primary">Aceptar</button>
@@ -238,6 +234,37 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>         
 </body>
+<script>
+    $(document).ready(function () {
+        $('.btn-desactivar').on('click', function () {
+
+            $('#tutorias-desactivar').text('¿Estás seguro de que desea desactivar las tutorias ?');
+            $('#modal').show();
+        });
+
+        $('#ok').on('click', function () {
+            const options = {
+                method: 'post',
+                url: 'https://localhost:8080/api/tutoria/desactivarTodasTutorias/',
+            }
+
+            axios
+                .request(options)
+                .then(function (response) {
+                    alert('Se desactivaron todas las tutorias');
+                    location.reload();
+                })
+                .catch(function (error) {
+                    alert(error);
+                    console.log(error);
+                });
+        });
+
+        $('#cancel').on('click', function () {
+            $('#modal').hide();
+        });
+    });
+</script>
 </html>

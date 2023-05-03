@@ -13,6 +13,7 @@ router.post('/crearTutoria',                       controller.createTutoria);
 router.put('/actualizarTutoria/:id',               controller.updateTutoria);
 router.put('/desactivarTutorias',                  controller.desactivarTutorias);
 router.delete('/deleteTutoria/:id',                controller.deleteTutoria);
+router.post('/desactivarTodasTutorias', controller.desactivarTodasTutorias);
 
 module.exports = router;
 
