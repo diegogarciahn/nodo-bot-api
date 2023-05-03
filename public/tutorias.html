@@ -143,9 +143,11 @@
                                             
                                         </td>
                                         <td>
-                                            <% if (solicitudTutoria.estado==1) { %>
-                                                <p class="text-success">Falta Aprobacion</p>
-                                                <% } %>
+                                            <% if (solicitudTutoria.estado == 1) { %>
+                                                <p class="text-danger">Falta Aprobacion</p>
+                                            <% } else { %>
+                                                <p class="text-success ">Aprobado</p>
+                                            <% } %>                                            
                                         </td>
                                         <td>
 
