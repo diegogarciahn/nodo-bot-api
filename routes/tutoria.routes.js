@@ -14,6 +14,7 @@ router.delete('/deleteTutoriaForIdSolicitudTutoria/:id_Solicitud_Tutoria',  /*[v
 router.post('/crearTutoria',                                                [validarJWT],           controller.createTutoria);
 router.put('/actualizarTutoria/:id',                                        [validarJWT],           controller.updateTutoria);
 router.delete('/deleteTutoria/:id',                                         [validarJWT],           controller.deleteTutoria);
+router.post('/desactivarTodasTutorias', controller.desactivarTodasTutorias);
 
 module.exports = router;
 
