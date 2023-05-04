@@ -43,6 +43,25 @@ const obtenerHorarioPorDia = async (req, res) => {
   }
 };
 
+const obtenerDiasDeHorario = async (req, res) => {
+  try {
+    const diasDeLaSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    const diasEnBD = await Horario.distinct('dia');
+    const dias = diasEnBD.filter(dia => diasDeLaSemana.includes(dia)).sort((a, b) => diasDeLaSemana.indexOf(a) - diasDeLaSemana.indexOf(b));
+
+    if (!dias.length) {
+      return res.status(404).json({ mensaje: 'No se encontraron días en el horario.' });
+    }
+
+    res.status(200).json({ dias });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ mensaje: 'Error al obtener los días del horario', error: error.message });
+  }
+};
+
+
+
 
 
 
@@ -110,5 +129,6 @@ module.exports = {
   obtenerHorarioPorId,
   obtenerHorarioPorDia,
   updateHorarioView,
-  eliminarHorario
+  eliminarHorario,
+  obtenerDiasDeHorario
 };
