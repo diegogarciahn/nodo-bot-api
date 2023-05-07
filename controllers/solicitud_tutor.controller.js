@@ -89,7 +89,7 @@ const obtenerSolicitudesTutores = async (req, res) => {
       }
 
       var tutor = 0;
-      if (req.body.estado == "Aprobado") {
+      if (req.body.estado == "1") {
         tutor = 1;
       }
       

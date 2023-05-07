@@ -40,6 +40,7 @@
                 <thead>
                     <tr>
                         <th>Estudiante</th>
+                        <th>Clase</th>
                         <th>Fecha</th>
                         <th class="">Opciones</th>
                     </tr>
@@ -55,6 +56,13 @@
                                         <%= solicitud.estudiante.numero_cuenta %>
                                             <br>
                                             <%= solicitud.estudiante.telefono %>
+
+                            </td>
+                            <td>
+                                <%= solicitud.clase.nombre_clase %>
+                                <% solicitud.horario_solicitado.forEach((horario)=> { %>
+                                    <%= horario.dia %> <%= horario.hora %>
+                                <% }) %>
 
                             </td>
                             <td>
@@ -107,7 +115,7 @@
             $('#titulo-solicitud').text('Aceptar Solicitud');
             $('#estudiante').val(nombre);
             $('#estudiante').attr('data-id', idEstudiante);
-            $('#ok').attr('data-accion', 'Aprobado');
+            $('#ok').attr('data-accion', '1');
             $('#ok').attr('data-id-soli', id);
             $('#modal').show();
         });
@@ -119,7 +127,7 @@
             $('#titulo-solicitud').text('Eliminar Solicitud');
             $('#estudiante').val(nombre);
             $('#estudiante').attr('data-id', idEstudiante);
-            $('#ok').attr('data-accion', 'Rechazado');
+            $('#ok').attr('data-accion', '2');
             $('#ok').attr('data-id-soli', id);
             $('#modal').show();
         });
