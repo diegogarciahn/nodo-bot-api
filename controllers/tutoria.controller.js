@@ -187,7 +187,7 @@ const createTutoria = async (req, res, next) => {
       });
     }
     // Actualizar el estado de la solicitud de tutoría a "creada"
-    solicitud.estado = '0';
+    solicitud.estado = '1';
     await solicitud.save();
     // Crear la tutoría
         const tutoria = new Tutoria({
